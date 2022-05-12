@@ -1,0 +1,35 @@
+Tue Apr 12 20:00:50 NZST 2022 (log): Do you wish to view the game instructions (y/n): n
+Tue Apr 12 20:00:51 NZST 2022 (log): Do you want to load into a previous game (y/n): n
+Tue Apr 12 20:00:52 NZST 2022 (log): 2
+Tue Apr 12 20:00:55 NZST 2022 (log): 10
+Tue Apr 12 20:00:56 NZST 2022 (log): alex
+Tue Apr 12 20:00:57 NZST 2022 (log): Is alex the name you want (y/n):y
+Tue Apr 12 20:01:00 NZST 2022 (log): attack
+Tue Apr 12 20:01:05 NZST 2022 (log): Do you want to save (y/n): y
+Tue Apr 12 20:01:06 NZST 2022 (log): Do you wish to play again (y/n): y
+Tue Apr 12 20:01:08 NZST 2022 (log): Do you wish to view the game instructions (y/n): n
+Tue Apr 12 20:01:09 NZST 2022 (log): Do you want to load into a previous game (y/n): y
+Tue Apr 12 20:01:11 NZST 2022 (log): alex
+Tue Apr 12 20:02:31 NZST 2022 (log): Do you wish to view the game instructions (y/n): y
+Tue Apr 12 20:02:33 NZST 2022 (log): Do you want to load into a previous game (y/n): y
+Tue Apr 12 20:02:35 NZST 2022 (log): alex
+Tue Apr 12 20:02:37 NZST 2022 (log): x
+Tue Apr 12 20:02:39 NZST 2022 (log): c
+Tue Apr 12 20:02:41 NZST 2022 (log): 1
+Tue Apr 12 20:02:43 NZST 2022 (log): 10
+Tue Apr 12 20:02:44 NZST 2022 (log): alex
+Tue Apr 12 20:02:45 NZST 2022 (log): Is alex the name you want (y/n):y
+Tue Apr 12 20:02:48 NZST 2022 (log): attack
+Tue Apr 12 20:02:52 NZST 2022 (log): Do you want to save (y/n): y
+Tue Apr 12 20:02:53 NZST 2022 (log): Do you wish to play again (y/n): y
+Tue Apr 12 20:02:55 NZST 2022 (log): Do you wish to view the game instructions (y/n): n
+Tue Apr 12 20:02:56 NZST 2022 (log): Do you want to load into a previous game (y/n): y
+Tue Apr 12 20:02:58 NZST 2022 (log): alex
+Tue Apr 12 20:03:01 NZST 2022 (log): attack
+Tue Apr 12 20:03:02 NZST 2022 (log): attack
+Tue Apr 12 20:03:04 NZST 2022 (log): attack
+Tue Apr 12 20:03:06 NZST 2022 (log): attack
+Tue Apr 12 20:03:08 NZST 2022 (log): attack
+Tue Apr 12 20:03:11 NZST 2022 (log): Do you want to save (y/n): y
+Tue Apr 12 20:03:13 NZST 2022 (log): Do you wish to play again (y/n): n
+Tue Apr 26 19:41:00 NZST 2022 (log): Do you wish to view the game instructions (y/n): y
