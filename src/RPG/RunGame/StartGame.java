@@ -17,23 +17,19 @@ import RPG.GameSetup.Game;
 public class StartGame
 {
 
-    private GUI gui;
 
-    public StartGame(GUI gui)
+    public StartGame()
     {
-        this.gui = gui;
     }
 
     //creates a new game object for the user
     public void newGame()
     {
-        gui.setNewGameScreen();
     }
 
     //load the game into a previous save
     public void loadGame()
     {
-        gui.setLoadScreen();
     }
     
     public Game validateLoadInput(String text)

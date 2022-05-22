@@ -4,15 +4,17 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/.git/config</file>
-            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/GUI/Controller.java</file>
-            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/resources/GameSaves.txt</file>
-            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/GameSetup/Game.java</file>
-            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/RunGame/StartGame.java</file>
-            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/FileIO/GameSave.java</file>
+            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/UserInput/ParseInput.java</file>
             <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/MainMethod/RunGame.java</file>
             <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/GUI/PanelGenerator.java</file>
             <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/GUI/GUI.java</file>
-            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/UserInput/ParseInput.java</file>
+            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/GameSetup/Game.java</file>
+            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/RunGame/StartGame.java</file>
+            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/GUI/Controller.java</file>
+            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/FileIO/GameSave.java</file>
+            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/resources/GameSaves.txt</file>
+            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/EnemyClasses/Enemy.java</file>
+            <file>file:/C:/Users/GGPC/Documents/NetBeansProjects/PSCAssignment2/src/RPG/FileIO/FileReaderWriter.java</file>
         </group>
     </open-files>
 </project-private>

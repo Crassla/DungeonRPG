@@ -25,16 +25,14 @@ import javax.swing.border.TitledBorder;
  *
  * @author alex
  */
-public class PanelGenerator
+public class ContentGenerator
 {
 
-    private GUI gui;
     private final Controller handlerGenerator;
 
-    public PanelGenerator(GUI gui)
+    public ContentGenerator(Controller controller)
     {
-        this.gui = gui;
-        handlerGenerator = new Controller(gui);
+        handlerGenerator = controller;
     }
 
     public JPanel titalPanel()
@@ -79,24 +77,7 @@ public class PanelGenerator
         return panel;
     }
 
-    public JPanel loadGamePanel()
-    {
-        JPanel panel = new JPanel();
-        JLabel label;
 
-        panel.setBackground(Color.black);
-
-        label = new JLabel("LOAD PREVIOUS GAME");
-        label.setForeground(Color.white);
-        label.setFont(new Font("Times New Roman", Font.PLAIN, 50));
-
-        panel.add(label);
-
-        label.setVisible(true);
-        panel.setVisible(true);
-
-        return panel;
-    }
 
     public JPanel newGamePanel()
     {

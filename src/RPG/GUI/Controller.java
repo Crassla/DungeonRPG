@@ -16,11 +16,11 @@ import java.awt.event.ActionListener;
 public class Controller
 {
 
-    private GUI gui;
+    private Model model;
 
-    public Controller(GUI gui)
+    public Controller(Model model)
     {
-        this.gui = gui;
+        this.model = model;
     }
 
     public ActionListener newGameHandler()
@@ -30,8 +30,7 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent event)
             {
-                StartGame startGame = new StartGame(gui);
-                startGame.newGame();
+                model.newGame();
             }
         };
 
@@ -45,8 +44,7 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent event)
             {
-                StartGame startGame = new StartGame(gui);
-                startGame.loadGame();
+                model.loadGame();
             }
         };
 
@@ -60,16 +58,7 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent event)
             {
-                StartGame startGame = new StartGame(gui);
-                Game game = startGame.validateLoadInput(gui.getLoadTextField());
-                if (game == null)
-                {
-                    gui.updateErrorLabel("Error: No save by the name " + gui.getLoadTextField() + " found!");
-                }
-                else
-                {
-                    gui.setGameScreen();
-                }
+                model.loadGameScreen();
             }
         };
 
@@ -83,8 +72,7 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent event)
             {
-                StartGame startGame = new StartGame(gui);
-                startGame.loadGame();
+                model.createGameScreen();
             }
         };
 

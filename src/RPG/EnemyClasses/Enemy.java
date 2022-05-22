@@ -26,7 +26,6 @@ public class Enemy implements Nameable
     //sets all of the base stats for the enemy class and modifies them based on the enemy type
     public Enemy(String name, EnemyType enemyType)
     {
-        this.name = null;
         this.name = name;
         this.damage = 20;
         this.health = 40;
