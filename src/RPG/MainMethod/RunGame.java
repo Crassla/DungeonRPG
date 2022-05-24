@@ -7,23 +7,23 @@ package RPG.MainMethod;
 import RPG.GUI.GUI;
 import javax.swing.SwingUtilities;
 
-
 /**
  *
  * @author alex
- * 
+ *
  * This class contains the main method for the game
  */
 public class RunGame
 {
+
     public static void main(String args[])
-    {   
+    {
         SwingUtilities.invokeLater(new Runnable()
         {
             @Override
             public void run()
             {
-                new GUI();
+                GUI gui = new GUI();
             }
         });
     }

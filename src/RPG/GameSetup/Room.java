@@ -90,10 +90,10 @@ public class Room implements Nameable
     {
         String output = "";
         
-        output += "You walk into " + this.name + "\n";
-        output += "In the middle of the room you see a potion that will add " + this.reward;
+        output += "<html>You walk into " + this.name + "<br>";
+        output += "In the middle of the room you see a potion that will add " + this.reward + "<br><br>";
         
-        output += "Suddenly a " + enemy.encounterStats() + "appears\n";
+        output += "Suddenly a " + enemy.encounterStats() + "appears<br></html>";
         
         return output;
     }

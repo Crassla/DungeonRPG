@@ -5,7 +5,6 @@
 package RPG.RunGame;
 
 import RPG.FileIO.GameSave;
-import RPG.GUI.GUI;
 import RPG.GameSetup.Game;
 
 /**
@@ -23,16 +22,30 @@ public class StartGame
     }
 
     //creates a new game object for the user
-    public void newGame()
+    public Game newGame(int numRooms, int playerClass, String playerName)
     {
+        
+        if (playerClass != -1 || !playerName.contains(":"))
+        {
+            Game game = new Game(numRooms, playerClass);
+            if (game != null)
+            {
+                game.getPlayer().setName(playerName);
+            }
+            
+            return game;
+        }
+        
+        return null;
     }
 
     //load the game into a previous save
-    public void loadGame()
+    public Game loadGame(String text)
     {
+        return validateLoadInput(text);
     }
     
-    public Game validateLoadInput(String text)
+    private Game validateLoadInput(String text)
     {
         GameSave gameSave = new GameSave();
         Game game;

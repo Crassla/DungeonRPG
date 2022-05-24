@@ -4,8 +4,6 @@
  */
 package RPG.GUI;
 
-import RPG.GameSetup.Game;
-import RPG.RunGame.StartGame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -73,6 +71,34 @@ public class Controller
             public void actionPerformed(ActionEvent event)
             {
                 model.createGameScreen();
+            }
+        };
+
+        return listener;
+    }
+    
+    public ActionListener moveHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.createEncounterScreen();
+            }
+        };
+
+        return listener;
+    }
+    
+    public ActionListener attackHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.attack();
             }
         };
 

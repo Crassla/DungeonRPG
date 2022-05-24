@@ -132,6 +132,23 @@ public class ContentGenerator
 
         return panel;
     }
+    
+    public JTextField createGameTextField()
+    {
+        Font font = new Font("Times New Roman", Font.PLAIN, 20);
+        JTextField textField = new JTextField(20);
+        textField.setText(":");
+        textField.setBackground(Color.black);
+        textField.setForeground(Color.white);
+        textField.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        
+        Border border1 = BorderFactory.createLineBorder(Color.white);
+        TitledBorder border2 = BorderFactory.createTitledBorder(border1, "Enter Characters Name", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
+
+        textField.setBorder(border2);
+
+        return textField;
+    }
 
     public JTextField loadTextField()
     {
@@ -173,7 +190,7 @@ public class ContentGenerator
 
     public JLabel mainLabel()
     {
-        JLabel label = new JLabel();
+        JLabel label = new JLabel("", SwingConstants.CENTER);
         label.setBackground(Color.black);
         label.setForeground(Color.white);
         label.setFont(new Font("Times New Roman", Font.PLAIN, 20));

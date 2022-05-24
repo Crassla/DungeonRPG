@@ -67,6 +67,11 @@ abstract public class Player implements Nameable
     {
         return this.currentRoom;
     }
+    
+    public String getPlayerClass()
+    {
+        return this.className;
+    }
 
     //adds one to the count of how many rooms the player has gone through
     public void incrementRoomNumber()
@@ -211,13 +216,13 @@ abstract public class Player implements Nameable
     @Override
     public String toString()
     {
-        String output = "";
+        String output = "<html>";
 
-        output += this.className + ": " + this.name + "\n";
-        output += "Health: " + this.health + "\n";
-        output += "Damage: " + this.damage + "\n";
-        output += "Armour Class: " + this.armourClass + "\n";
-        output += "rollModifier: " + this.rollModifier + "\n";
+        output += this.className + ": " + this.name + "<br>";
+        output += "Health: " + this.health + "<br>";
+        output += "Damage: " + this.damage + "<br>";
+        output += "Armour Class: " + this.armourClass + "<br>";
+        output += "rollModifier: " + this.rollModifier + "<br></html>";
 
         return output;
     }

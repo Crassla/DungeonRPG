@@ -4,15 +4,20 @@
  */
 package RPG.RunGame;
 
-import RPG.UserInput.ParseInput;
 import RPG.EnemyClasses.Enemy;
+import RPG.GUI.View;
 import RPG.PlayerClasses.Player;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Timer;
 
 /**
  *
  * @author alex
- * 
+ *
  * This class controls all of the methods and data for each encounter
  */
 public class Encounter
@@ -22,15 +27,17 @@ public class Encounter
     Random rand;
     private final Player player;
     private final Enemy enemy;
+    private final View view;
     private int block;
 
     //instantiates a new encounter using player and enemy objects
-    public Encounter(Player player, Enemy enemy)
+    public Encounter(Player player, Enemy enemy, View view)
     {
         this.player = player;
         this.enemy = enemy;
         this.block = 0;
         rand = new Random();
+        this.view = view;
     }
 
     //returns the player in this encounter
@@ -54,19 +61,33 @@ public class Encounter
     //if the player chooses to attack this method runs
     //the enemies stats isn't mentioned as normally in dnd and video games you do not get
     //to see the enemies stats
-    public void attack()
+    public int attack()
     {
         int attack = this.rollD20();
-        System.out.println("You roll a " + attack);
+        String output = "<html>";
+        output += ("You roll a " + attack) + "<br>";
         if (attack > enemy.getArmourClass()) //checks that the attack is higher than the enemies armour class
         {
-            System.out.println("This hits!");
+            output += ("This hits!") + "<br>";
             enemy.setHealth(player.getDamage() * -1); //damages the enemy (-1 as the health is added to the enemy)
         }
         else
         {
-            System.out.println("That doesn't hit."); //outputs if the roll doesn't hit
+            output += ("That doesn't hit.") + "<br></html>"; //outputs if the roll doesn't hit
         }
+        view.setEnemyHealth(enemy.getHealth() + "");
+        view.updateMainLabel(output);
+        Timer timer = new Timer(1000, new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                enemyTurn();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
+        return -1;
     }
 
     //if the player chooses to block this method runs
@@ -92,30 +113,43 @@ public class Encounter
     }
 
     //this code runs the enemys turn
-    public void enemyTurn()
+    public int enemyTurn()
     {
         int attack;
+        String output = "<html>";
 
         if (enemy.getHealth() <= 0) //firstly checks if the enemy is dead as the player goes first
         {
-            System.out.println(enemy + " dies");
+            output += (enemy + " dies") + "<br></html>";
+            view.updateMainLabel(output);
+            Timer timer = new Timer(1000, new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent event)
+                {
+                    endEncounter();
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
+            return 0;
         }
         else
         {
-            System.out.println(enemy + " attacks");
+            output += (enemy + " attacks") + "<br><br>";
             attack = rand.nextInt(20) + 1 + enemy.getRollModifier();
-            System.out.println(enemy + " rolls a " + attack);
+            output += (enemy + " rolls a " + attack) + "<br>";
 
             if (attack > player.getArmourClass()) //checks that enemies attack is higher than the armour class
             {
-                System.out.println("It Hits!");
+                output += ("It Hits!") + "<br>";
                 int damage = ((enemy.getDamage() - block) * -1); //does damage - block to the character
                 if (damage > 0)
                 {
                     damage = 0;
                 }
                 player.setHealth(damage);
-                
+
                 if (block - enemy.getDamage() < 0) // takes away the block by the enemies damage if it would be negative instead set it to 0
                 {
                     block = 0;
@@ -127,62 +161,76 @@ public class Encounter
             }
             else
             {
-                System.out.println("It Missed!");
+                output += ("It Missed!") + "<br>";
             }
 
-            System.out.println(enemy + " has " + enemy.getHealth() + " health left."); //output enemies health
-            System.out.println(player.encounterToString()); 
+            output += (enemy + " has " + enemy.getHealth() + " health left.") + "<br></html>"; //output enemies health
+            view.setEncounterPlayerHealth(player.getHealth() + "");
+            view.updateMainLabel(output);
+            return -1;
         }
     }
 
     //this is the main method in control off the encounter
-    public boolean runEncounter()
+    public void runEncounter()
     {
-        do
-        {
-            ParseInput.parseEncounterCommandInput(this); //get the encounter command
-            this.enemyTurn();//run the enemies turn
-
-            if (player.getUsedSkill() && !player.getReversedSkill()) //if the player has just used the skill set it to false
-            {
-                player.reverseSkill();
-            }
-        }
-        while (enemy.getHealth() > 0 && player.getHealth() > 0); //if the enemy of the player dies end the encounter
-
-        return this.endEncounter(); //runs the end of the encounter
+        view.setEncounterScreen();
+        view.setEnemyHealth(player.getHealth() + "");
+        view.setEncounterPlayerHealth(enemy.getHealth() + "");
+        view.updateMainLabel(player.getRoom().toString());
     }
 
     //runs the end of the encounter
-    //if the player is killed returns false otherwise returns true
-    public boolean endEncounter()
+    //if the player is killed returns 1 otherwise it returns 0
+    public int endEncounter()
     {
+        String output = "<html>";
+        view.setGameScreen();
+
         if (player.getHealth() <= 0)
         {
-            System.out.println("Oh no you have been killed by the " + enemy);
-            System.out.println("Your final stats were:");
-            System.out.println(player);
-            return false;
+            output += ("Oh no you have been killed by the " + enemy) + "<br>";
+            output += ("Your final stats were:") + "<br>";
+            output += (player) + "<br></html>";
+            view.updateMainLabel(output);
+            return 1;
         }
         else
         {
             player.setUsedSkill(false);
             player.setReversedSkill(false);
             player.incrementRoomNumber();
-            applyReward();
-            return true;
+            try
+            {
+                Thread.sleep(2000);
+            }
+            catch (InterruptedException ex)
+            {
+                Logger.getLogger(Encounter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return applyReward();
         }
     }
 
     //applies the reward to the player
-    public void applyReward()
+    public int applyReward()
     {
-        System.out.println("You win against " + player.getRoom().getEnemy());
-        System.out.println("You won " + player.getRoom().getReward());
-        System.out.println("You rest and regain 20 health");
+        String output = "<html>";
+        output += ("You win against " + player.getRoom().getEnemy()) + "<br>";
+        output += ("You won " + player.getRoom().getReward()) + "<br>";
+        output += ("You rest and regain 20 health") + "<br>";
         player.setHealth(20);
         player.getRoom().getReward().addReward(player);
-        System.out.println("Your current stats are: ");
-        System.out.println(player);
+        output += ("Your current stats are: ") + "<br>";
+        output += (player) + "<br></html>";
+
+        view.setGameScreen();
+        view.setPlayerHealthLabel(player.getName(), player.getPlayerClass(), "" + player.getHealth());
+        view.setPlayerDamageLabel("" + player.getDamage());
+        view.setPlayerArmourLabel("" + player.getArmourClass());
+        view.setPlayerRollLabel("" + player.getRollModifier());
+        view.updateMainLabel(output);
+        
+        return 0;
     }
 }
