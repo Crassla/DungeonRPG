@@ -132,4 +132,18 @@ public class Controller
 
         return listener;
     }
+    
+    public ActionListener exitGameHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.exitGame();
+            }
+        };
+
+        return listener;
+    }
 }

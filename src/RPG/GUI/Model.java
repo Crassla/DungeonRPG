@@ -99,4 +99,10 @@ public class Model
         view.disableEncounterButtons();
         encounter.skill();
     }
+    
+    public void exitGame()
+    {
+        view.setSaveScreen();
+        updateGameLabels();
+    }
 }

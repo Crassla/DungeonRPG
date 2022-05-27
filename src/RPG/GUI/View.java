@@ -32,7 +32,7 @@ public class View extends JFrame
     private final ContentGenerator cg;
     private final Controller controller;
     private final Container container;
-    private JPanel titleScreen, loadGameScreen, newGameScreen, mainGameScreen, encounterScreen;
+    private JPanel titleScreen, loadGameScreen, newGameScreen, mainGameScreen, encounterScreen, saveScreen, endGameScreen;
     private JTextField loadTextField, createGameTextField;
     private JLabel errorLabel, mainLabel, playerHealth, playerDamage, playerRollModifier, playerArmourClass, enemyHealth, roomsLeft;
     private JList classList;
@@ -110,7 +110,12 @@ public class View extends JFrame
         if (encounterScreen != null)
         {
             container.remove(encounterScreen);
-            encounterScreen.setVisible(true);
+            encounterScreen.setVisible(false);
+        }
+        if (saveScreen != null)
+        {
+            container.remove(saveScreen);
+            saveScreen.setVisible(false);
         }
         this.validate();
         this.repaint();
@@ -236,6 +241,7 @@ public class View extends JFrame
         exit.setBackground(Color.black);
         exit.setForeground(Color.white);
         exit.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        exit.addActionListener(controller.exitGameHandler());
 
         panel3.add(move);
         panel3.add(exit);
@@ -356,6 +362,83 @@ public class View extends JFrame
 
         container.add(encounterScreen);
 
+        this.validate();
+        this.repaint();
+    }
+    
+    public void setSaveScreen()
+    {
+        removeCurrentScreen();
+                
+        Font font = new Font("Times New Roman", Font.BOLD, 20);
+        saveScreen = initPanel(saveScreen);
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.black);
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.black);
+        JPanel panel3 = new JPanel();
+        panel3.setBackground(Color.black);
+        errorLabel = cg.errorLabel();
+        errorLabel.setText("");
+        panel3.add(errorLabel);
+        JPanel panel4 = new JPanel();
+        panel4.setBackground(Color.black);
+        
+        Border border1 = BorderFactory.createEmptyBorder();
+        TitledBorder border2 = BorderFactory.createTitledBorder(border1, "Your current stats:", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
+
+        panel2.setBorder(border2);
+        
+        JLabel label;
+
+        panel.setBackground(Color.black);
+
+        label = new JLabel("SAVE CURRENT GAME");
+        label.setForeground(Color.white);
+        label.setFont(new Font("Times New Roman", Font.PLAIN, 80));
+        
+        playerHealth = new JLabel("        Health:        ");
+        playerHealth.setForeground(Color.white);
+        playerHealth.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+
+        playerDamage = new JLabel("        Damage:        ");
+        playerDamage.setForeground(Color.white);
+        playerDamage.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+
+        playerArmourClass = new JLabel("        Armour:        ");
+        playerArmourClass.setForeground(Color.white);
+        playerArmourClass.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+
+        playerRollModifier = new JLabel("        Roll Modifer:        ");
+        playerRollModifier.setForeground(Color.white);
+        playerRollModifier.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+        
+        roomsLeft = new JLabel();
+        roomsLeft.setForeground(Color.white);
+        roomsLeft.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+        
+        panel2.add(playerHealth);
+        panel2.add(playerDamage);
+        panel2.add(playerArmourClass);
+        panel2.add(playerRollModifier);
+        panel2.add(roomsLeft);
+        
+        JButton saveButton = new JButton("SAVE");
+        saveButton.setBackground(Color.black);
+        saveButton.setForeground(Color.white);
+        saveButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+     
+        panel4.add(saveButton);
+        panel.add(label);
+        
+        saveScreen.add(panel);
+        saveScreen.add(panel2);
+        saveScreen.add(panel3);
+        saveScreen.add(panel4);
+        
+        container.add(saveScreen);
+        
         this.validate();
         this.repaint();
     }
