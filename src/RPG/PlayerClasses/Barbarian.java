@@ -35,10 +35,17 @@ public class Barbarian extends Player
     //applies the barbarians skill
     @Override
     public void skill()
-    {
-        System.out.println("You feel a burst of rage. Your damage increases by 20");
+    {      
         this.setDamage(20);
         this.setUsedSkill(true);
+    }
+    
+    @Override 
+    public String skillString()
+    {
+        String output = "<html>";
+        output +=("You feel a burst of rage. Your damage increases by 20 <br> </html>");
+        return output;
     }
 
     //reverses the skill as the changes should not be permanent

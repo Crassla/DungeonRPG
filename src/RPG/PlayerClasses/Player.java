@@ -49,6 +49,8 @@ abstract public class Player implements Nameable
 
     //skill which is class based
     abstract public void skill();
+    
+    abstract public String skillString();
 
     //reverses class based skill
     abstract public void reverseSkill();

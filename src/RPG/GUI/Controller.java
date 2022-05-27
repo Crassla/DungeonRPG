@@ -104,4 +104,32 @@ public class Controller
 
         return listener;
     }
+    
+    public ActionListener blockHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.block();
+            }
+        };
+
+        return listener;
+    }
+    
+    public ActionListener skillHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.skill();
+            }
+        };
+
+        return listener;
+    }
 }

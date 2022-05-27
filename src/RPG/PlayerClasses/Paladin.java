@@ -36,9 +36,18 @@ public class Paladin extends Player
     @Override
     public void skill()
     {
-        System.out.println("You feel a Gods blessing fall upon you. You heal 20 health");
         this.setHealth(20);
         this.setUsedSkill(true);
+    }
+    
+    @Override 
+    public String skillString()
+    {
+        String output = "<html>";
+        output += ("You feel a Gods blessing fall upon you. You heal 20 health <br></html>");
+        this.setHealth(20);
+        this.setUsedSkill(true);
+        return output;
     }
 
     //no need to reverse the skill for paladin 

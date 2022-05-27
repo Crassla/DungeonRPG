@@ -34,9 +34,10 @@ public class View extends JFrame
     private final Container container;
     private JPanel titleScreen, loadGameScreen, newGameScreen, mainGameScreen, encounterScreen;
     private JTextField loadTextField, createGameTextField;
-    private JLabel errorLabel, mainLabel, playerHealth, playerDamage, playerRollModifier, playerArmourClass, enemyHealth;
+    private JLabel errorLabel, mainLabel, playerHealth, playerDamage, playerRollModifier, playerArmourClass, enemyHealth, roomsLeft;
     private JList classList;
     private JSpinner numRoomSpinner;
+    private JButton attack, block, skill;
 
     public View(Controller controller)
     {
@@ -220,6 +221,10 @@ public class View extends JFrame
         playerRollModifier = new JLabel("        Roll Modifer:        ");
         playerRollModifier.setForeground(Color.white);
         playerRollModifier.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+        
+        roomsLeft = new JLabel();
+        roomsLeft.setForeground(Color.white);
+        roomsLeft.setFont(new Font("Times New Roman", Font.PLAIN, 22));
 
         JButton move = new JButton("MOVE");
         move.setBackground(Color.black);
@@ -239,6 +244,7 @@ public class View extends JFrame
         panel.add(playerDamage);
         panel.add(playerArmourClass);
         panel.add(playerRollModifier);
+        panel.add(roomsLeft);
 
         mainLabel = cg.mainLabel();
         panel2.add(mainLabel);
@@ -310,21 +316,23 @@ public class View extends JFrame
         enemyHealth.setForeground(Color.white);
         enemyHealth.setFont(new Font("Times New Roman", Font.PLAIN, 22));
 
-        JButton attack = new JButton("ATTACK");
+        attack = new JButton("ATTACK");
         attack.setBackground(Color.black);
         attack.setForeground(Color.white);
         attack.setFont(new Font("Times New Roman", Font.BOLD, 20));
         attack.addActionListener(controller.attackHandler());
 
-        JButton block = new JButton("BLOCK");
+        block = new JButton("BLOCK");
         block.setBackground(Color.black);
         block.setForeground(Color.white);
         block.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        block.addActionListener(controller.blockHandler());
         
-        JButton skill = new JButton("USE SKILL");
+        skill = new JButton("USE SKILL");
         skill.setBackground(Color.black);
         skill.setForeground(Color.white);
         skill.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        skill.addActionListener(controller.skillHandler());
 
         panel3.add(attack);
         panel3.add(block);
@@ -352,6 +360,20 @@ public class View extends JFrame
         this.repaint();
     }
 
+    public void disableEncounterButtons()
+    {
+        attack.setEnabled(false);
+        block.setEnabled(false);
+        skill.setEnabled(false);
+    }
+    
+    public void enableEncounterButtons()
+    {
+        attack.setEnabled(true);
+        block.setEnabled(true);
+        skill.setEnabled(true);
+    }
+    
     public void updateMainLabel(String text)
     {
         mainLabel.setText(text);
@@ -403,6 +425,23 @@ public class View extends JFrame
         }
 
         playerHealth.setText(text);
+    }
+    
+    public void setRoomLabel(String text)
+    {
+        for (int i = 10; i > text.length(); i--)
+        {
+            text += " ";
+        }
+
+        text = "Rooms Left:   " + text;
+
+        for (int i = 10; i > text.length(); i--)
+        {
+            text += " ";
+        }
+        
+        this.roomsLeft.setText(text);
     }
 
     public void setPlayerDamageLabel(String text)

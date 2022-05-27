@@ -127,6 +127,11 @@ public class Game
     {
         return this.mapSize;
     }
+    
+    public int getMapLength()
+    {
+        return this.map.size();
+    }
 
     //returns the player
     public Player getPlayer()
@@ -154,5 +159,18 @@ public class Game
             player.setRoom(map.get(0));
             return false;
         }
+    }
+    
+    @Override
+    public String toString()
+    {
+        String output = "";
+        
+        for (Room room : map)
+        {
+            output += room +"\n";
+        }
+        
+        return output;
     }
 }

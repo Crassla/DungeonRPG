@@ -6,12 +6,11 @@ package RPG.RunGame;
 
 import RPG.EnemyClasses.Enemy;
 import RPG.GUI.View;
+import RPG.GameSetup.Game;
 import RPG.PlayerClasses.Player;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
@@ -29,15 +28,17 @@ public class Encounter
     private final Enemy enemy;
     private final View view;
     private int block;
+    private Game game;
 
     //instantiates a new encounter using player and enemy objects
-    public Encounter(Player player, Enemy enemy, View view)
+    public Encounter(Player player, Enemy enemy, View view, Game game)
     {
         this.player = player;
         this.enemy = enemy;
         this.block = 0;
         rand = new Random();
         this.view = view;
+        this.game = game;
     }
 
     //returns the player in this encounter
@@ -61,7 +62,7 @@ public class Encounter
     //if the player chooses to attack this method runs
     //the enemies stats isn't mentioned as normally in dnd and video games you do not get
     //to see the enemies stats
-    public int attack()
+    public void attack()
     {
         int attack = this.rollD20();
         String output = "<html>";
@@ -87,33 +88,48 @@ public class Encounter
         });
         timer.setRepeats(false);
         timer.start();
-        return -1;
     }
 
     //if the player chooses to block this method runs
     public void block()
     {
         block += player.getArmourClass(); //it adds armour class to block
-        System.out.println("You are blocking for " + player.getArmourClass());
+        String output = "<html>";
+        output += ("You are blocking for " + player.getArmourClass()) + "<br></html>";
+        view.updateMainLabel(output);
+        Timer timer = new Timer(1000, new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                enemyTurn();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     //if the player chooses to use their skill this method runs
     public void skill()
     {
+        String output = "";
         if (!player.getUsedSkill()) //checks if the player has used their skill before
         {
             //it sets the used skill to true as you can only use your skill once per encounter
             player.setUsedSkill(true);
-            player.skill(); //runs the players skill
+            output += player.skillString();
+            player.skill();
         }
         else
         {
-            System.out.println("You have already used your skill this encounter");
+            output += ("<html>You have already used your skill this encounter<br></html>");
         }
+        view.updateMainLabel(output);
+        view.enableEncounterButtons();
     }
 
     //this code runs the enemys turn
-    public int enemyTurn()
+    public void enemyTurn()
     {
         int attack;
         String output = "<html>";
@@ -132,7 +148,6 @@ public class Encounter
             });
             timer.setRepeats(false);
             timer.start();
-            return 0;
         }
         else
         {
@@ -167,7 +182,7 @@ public class Encounter
             output += (enemy + " has " + enemy.getHealth() + " health left.") + "<br></html>"; //output enemies health
             view.setEncounterPlayerHealth(player.getHealth() + "");
             view.updateMainLabel(output);
-            return -1;
+            view.enableEncounterButtons();
         }
     }
 
@@ -182,7 +197,7 @@ public class Encounter
 
     //runs the end of the encounter
     //if the player is killed returns 1 otherwise it returns 0
-    public int endEncounter()
+    public void endEncounter()
     {
         String output = "<html>";
         view.setGameScreen();
@@ -193,27 +208,20 @@ public class Encounter
             output += ("Your final stats were:") + "<br>";
             output += (player) + "<br></html>";
             view.updateMainLabel(output);
-            return 1;
+            view.enableEncounterButtons();
         }
         else
         {
             player.setUsedSkill(false);
             player.setReversedSkill(false);
             player.incrementRoomNumber();
-            try
-            {
-                Thread.sleep(2000);
-            }
-            catch (InterruptedException ex)
-            {
-                Logger.getLogger(Encounter.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return applyReward();
+            game.nextRoom();
+            applyReward();
         }
     }
 
     //applies the reward to the player
-    public int applyReward()
+    public void applyReward()
     {
         String output = "<html>";
         output += ("You win against " + player.getRoom().getEnemy()) + "<br>";
@@ -229,8 +237,8 @@ public class Encounter
         view.setPlayerDamageLabel("" + player.getDamage());
         view.setPlayerArmourLabel("" + player.getArmourClass());
         view.setPlayerRollLabel("" + player.getRollModifier());
+        view.setRoomLabel("" + game.getMapLength());
         view.updateMainLabel(output);
-        
-        return 0;
+        view.enableEncounterButtons();
     }
 }

@@ -51,13 +51,14 @@ public class Model
         view.setGameScreen();
         updateGameLabels();
     }
-    
+
     public void updateGameLabels()
     {
         view.setPlayerHealthLabel(game.getPlayer().getName(), game.getPlayer().getPlayerClass(), "" + game.getPlayer().getHealth());
         view.setPlayerDamageLabel("" + game.getPlayer().getDamage());
         view.setPlayerArmourLabel("" + game.getPlayer().getArmourClass());
         view.setPlayerRollLabel("" + game.getPlayer().getRollModifier());
+        view.setRoomLabel("" + game.getMapLength());
     }
 
     public void loadGameScreen()
@@ -70,25 +71,32 @@ public class Model
         else
         {
             view.setGameScreen();
-            view.setPlayerHealthLabel(game.getPlayer().getName(), game.getPlayer().getPlayerClass(), "" + game.getPlayer().getHealth());
-            view.setPlayerDamageLabel("" + game.getPlayer().getDamage());
-            view.setPlayerArmourLabel("" + game.getPlayer().getArmourClass());
-            view.setPlayerRollLabel("" + game.getPlayer().getRollModifier());
+            updateGameLabels();
         }
     }
 
     public void createEncounterScreen()
     {
-        encounter = new Encounter(game.getPlayer(), game.getPlayer().getRoom().getEnemy(), view);
-        
+        encounter = new Encounter(game.getPlayer(), game.getPlayer().getRoom().getEnemy(), view, game);
+
         encounter.runEncounter();
     }
-    
+
     public void attack()
     {
-        if (encounter.attack() == 0)
-        {
-            game.nextRoom();
-        }
+        view.disableEncounterButtons();
+        encounter.attack();
+    }
+    
+    public void block()
+    {
+        view.disableEncounterButtons();
+        encounter.block();
+    }
+    
+    public void skill()
+    {
+        view.disableEncounterButtons();
+        encounter.skill();
     }
 }

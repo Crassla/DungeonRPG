@@ -34,9 +34,16 @@ public class Wizard extends Player
     @Override
     public void skill()
     {
-        System.out.println("You gain sudden inspiration. You get +8 to your next roll");
         this.setRollModifier(8);
         this.setUsedSkill(true);
+    }
+    
+    @Override 
+    public String skillString()
+    {
+        String output = "<html>";
+        output += ("You gain sudden inspiration. You get +8 to your next roll<br></html>");
+        return output;
     }
     
     //reverses the wizards skill
