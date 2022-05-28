@@ -117,6 +117,12 @@ public class View extends JFrame
             container.remove(saveScreen);
             saveScreen.setVisible(false);
         }
+        if (endGameScreen != null)
+        {
+            container.remove(endGameScreen);
+            endGameScreen.setVisible(false);
+        }
+        
         this.validate();
         this.repaint();
     }
@@ -428,8 +434,16 @@ public class View extends JFrame
         saveButton.setBackground(Color.black);
         saveButton.setForeground(Color.white);
         saveButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        saveButton.addActionListener(controller.saveGameHandler());
+        
+        JButton exitButton = new JButton("DON'T SAVE");
+        exitButton.setBackground(Color.black);
+        exitButton.setForeground(Color.white);
+        exitButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        exitButton.addActionListener(controller.quitGameHandler());
      
         panel4.add(saveButton);
+        panel4.add(exitButton);
         panel.add(label);
         
         saveScreen.add(panel);
@@ -438,6 +452,64 @@ public class View extends JFrame
         saveScreen.add(panel4);
         
         container.add(saveScreen);
+        
+        this.validate();
+        this.repaint();
+    }
+    
+    public void setEndGameScreen()
+    {
+        removeCurrentScreen();
+                
+        endGameScreen = initPanel(endGameScreen);
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.black);
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.black);
+        JPanel panel3 = new JPanel();
+        panel3.setBackground(Color.black);
+        
+        JLabel label;
+        label = new JLabel("EXIT DUNGEON RPG");
+        label.setForeground(Color.white);
+        label.setFont(new Font("Times New Roman", Font.PLAIN, 80));
+        
+        JButton scoreBoardButton = new JButton("SHOW SCOREBOARD");
+        scoreBoardButton.setBackground(Color.black);
+        scoreBoardButton.setForeground(Color.white);
+        scoreBoardButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        
+        JButton leaderBoardButton = new JButton("SHOW LEADERBOARD");
+        leaderBoardButton.setBackground(Color.black);
+        leaderBoardButton.setForeground(Color.white);
+        leaderBoardButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        
+        JButton newButton = new JButton("NEW GAME");
+        newButton.setBackground(Color.black);
+        newButton.setForeground(Color.white);
+        newButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        
+        JButton exitButton = new JButton("QUIT GAME");
+        exitButton.setBackground(Color.black);
+        exitButton.setForeground(Color.white);
+        exitButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+     
+        panel2.add(mainLabel);
+        
+        mainLabel.setText("<html>Thank you for playing Dungeon RPG!<br><br>If you want to view the current "
+                + "scoreboard or leaderboard please click the button below. <br><br> If you wish to play again please click the play again button!</html>");
+        panel3.add(scoreBoardButton);
+        panel3.add(leaderBoardButton);
+        panel3.add(newButton);
+        panel3.add(exitButton);
+        panel.add(label);
+        
+        endGameScreen.add(panel);
+        endGameScreen.add(panel2);
+        endGameScreen.add(panel3);
+        
+        container.add(endGameScreen);
         
         this.validate();
         this.repaint();

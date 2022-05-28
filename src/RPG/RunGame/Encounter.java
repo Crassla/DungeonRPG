@@ -207,8 +207,18 @@ public class Encounter
             output += ("Oh no you have been killed by the " + enemy) + "<br>";
             output += ("Your final stats were:") + "<br>";
             output += (player) + "<br></html>";
-            view.updateMainLabel(output);
             view.enableEncounterButtons();
+            view.updateMainLabel(output);
+            Timer timer = new Timer(1000, new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent event)
+                {
+                    view.setEndGameScreen();
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
         else
         {

@@ -27,10 +27,40 @@ public class GameSave
     //main file i/o componene to control saving and loading of specific files
     private final FileReaderWriter readerWriter = new FileReaderWriter();
     
+    private boolean overWrite;
+    private boolean askOverWrite;
+    
     //instantiates the array which stores the list of saves
     public GameSave()
     {
         instantiateArray();
+        overWrite = false;
+        askOverWrite = false;
+    }
+    
+    public void setOverrite()
+    {
+        overWrite = true;
+    }
+    
+    public void noOverwrite()
+    {
+        overWrite = false;
+    }
+    
+    public void setAskOverWrite(boolean input)
+    {
+        askOverWrite = input;
+    }
+    
+    public boolean getOverWrite()
+    {
+        return this.overWrite;
+    }
+    
+    public boolean getAskOverWrite()
+    {
+        return this.askOverWrite;
     }
    
     //saves player data in the format:
@@ -136,7 +166,7 @@ public class GameSave
 
                 if (name.equals(playerName))
                 {
-                    if (ParseInput.getYNInput("Save already exists. Do you want to overwrite the save (y/n): ")) //if it does exist it asks if they want to overwrite their save
+                    if (overWrite) //if it does exist it asks if they want to overwrite their save
                     {
                         gameList.remove(line);
                         gameList.add(tokenizedString);

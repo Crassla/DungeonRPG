@@ -4,6 +4,7 @@
  */
 package RPG.GUI;
 
+import RPG.FileIO.GameSave;
 import RPG.GameSetup.Game;
 import RPG.RunGame.Encounter;
 import RPG.RunGame.StartGame;
@@ -19,6 +20,7 @@ public class Model
     private StartGame startGame;
     private Game game;
     private Encounter encounter;
+    private GameSave gameSave;
 
     public Model()
     {
@@ -87,22 +89,41 @@ public class Model
         view.disableEncounterButtons();
         encounter.attack();
     }
-    
+
     public void block()
     {
         view.disableEncounterButtons();
         encounter.block();
     }
-    
+
     public void skill()
     {
         view.disableEncounterButtons();
         encounter.skill();
     }
-    
+
     public void exitGame()
     {
         view.setSaveScreen();
         updateGameLabels();
+    }
+
+    public void saveGame()
+    {
+        gameSave = new GameSave();
+        if (gameSave.getAskOverWrite() && !gameSave.getOverWrite())
+        {
+            gameSave.setOverrite();
+        }
+
+        if (!gameSave.saveGame(game))
+        {
+            view.updateErrorLabel("Save already exists, click save again to overwrite otherwise click don't save to cancel");
+        }
+    }
+    
+    public void quitGame()
+    {
+        view.setEndGameScreen();
     }
 }
