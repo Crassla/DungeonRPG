@@ -4,7 +4,8 @@
  */
 package RPG.GUI;
 
-import RPG.FileIO.GameSave;
+import RPG.Database.DBManager;
+import RPG.Database.GameSave;
 import RPG.GameSetup.Game;
 import RPG.RunGame.Encounter;
 import RPG.RunGame.StartGame;
@@ -21,10 +22,13 @@ public class Model
     private Game game;
     private Encounter encounter;
     private GameSave gameSave;
+    private final DBManager db;
 
     public Model()
     {
-        startGame = new StartGame();
+        db = new DBManager();
+        gameSave = new GameSave(db);
+        startGame = new StartGame(gameSave);
     }
 
     public void setView(View view)
@@ -119,16 +123,19 @@ public class Model
 
     public void saveGame()
     {
-        gameSave = new GameSave();
         if (gameSave.getAskOverWrite() && !gameSave.getOverWrite())
         {
-            gameSave.setOverrite();
-            view.setEndGameScreen();
+            gameSave.setOverrite(true);
         }
 
         if (!gameSave.saveGame(game))
         {
             view.updateErrorLabel("Save already exists, click save again to overwrite otherwise click don't save to cancel");
+            gameSave.setAskOverWrite(true);
+        }
+        else
+        {
+            view.setEndGameScreen();
         }
     }
 
@@ -136,22 +143,22 @@ public class Model
     {
         view.setEndGameScreen();
     }
-    
+
     public void closeGame()
     {
         view.dispose();
     }
-    
+
     public void restartGame()
     {
         view.setTitleScreen();
     }
-    
+
     public void showLeaderboard()
     {
         view.setTitleScreen();
     }
-    
+
     public void showScoreboard()
     {
         view.setTitleScreen();

@@ -156,6 +156,15 @@ public class View extends JFrame
         labelPanel.add(label);
         labelPanel.setBackground(Color.black);
 
+        JButton textButton2 = new JButton("EXIT");
+        textButton2.setBackground(Color.black);
+        textButton2.setForeground(Color.white);
+        textButton2.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        textButton2.setFocusPainted(false);
+        textButton2.addActionListener(controller.restartGameHandler());
+        
+        loadTextPanel.add(textButton2);
+
         loadGameScreen.add(Box.createVerticalStrut(50));
         loadGameScreen.add(labelPanel);
         loadGameScreen.add(Box.createVerticalStrut(50));

@@ -120,7 +120,6 @@ public class ContentGenerator
         textButton.setForeground(Color.white);
         textButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
         textButton.setFocusPainted(false);
-
         textButton.addActionListener(handlerGenerator.loadGameTextFieldHandler());
 
         panel.setBackground(Color.black);
@@ -137,7 +136,7 @@ public class ContentGenerator
     {
         Font font = new Font("Times New Roman", Font.PLAIN, 20);
         JTextField textField = new JTextField(20);
-        textField.setText(":");
+        textField.setText("");
         textField.setBackground(Color.black);
         textField.setForeground(Color.white);
         textField.setFont(new Font("Times New Roman", Font.BOLD, 20));

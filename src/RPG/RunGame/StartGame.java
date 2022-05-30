@@ -4,7 +4,7 @@
  */
 package RPG.RunGame;
 
-import RPG.FileIO.GameSave;
+import RPG.Database.GameSave;
 import RPG.GameSetup.Game;
 
 /**
@@ -15,10 +15,11 @@ import RPG.GameSetup.Game;
  */
 public class StartGame
 {
+    private final GameSave gameSave;
 
-
-    public StartGame()
+    public StartGame(GameSave gameSave)
     {
+        this.gameSave = gameSave;
     }
 
     //creates a new game object for the user
@@ -47,7 +48,7 @@ public class StartGame
     
     private Game validateLoadInput(String text)
     {
-        GameSave gameSave = new GameSave();
+        text = text.toLowerCase();
         Game game;
         
         game = gameSave.findSavedGame(text);
