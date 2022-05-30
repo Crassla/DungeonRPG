@@ -68,11 +68,20 @@ public class ContentGenerator
         loadButton.setForeground(Color.white);
         loadButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
         loadButton.setFocusPainted(false);
+        
+        JButton lButton = new JButton("VIEW INSTRUCTIONS");
+        lButton.setBackground(Color.black);
+        lButton.setForeground(Color.white);
+        lButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        lButton.setFocusPainted(false);
 
         startButton.addActionListener(handlerGenerator.newGameHandler());
         loadButton.addActionListener(handlerGenerator.loadGameHandler());
+        lButton.addActionListener(handlerGenerator.showInstructionsHandler());
+        
         panel.add(startButton);
         panel.add(loadButton);
+        panel.add(lButton);
 
         return panel;
     }

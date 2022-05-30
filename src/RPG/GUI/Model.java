@@ -7,8 +7,10 @@ package RPG.GUI;
 import RPG.Database.DBManager;
 import RPG.Database.GameSave;
 import RPG.Database.HighScore;
+import RPG.Database.Leaderboard;
 import RPG.GameSetup.Game;
 import RPG.RunGame.Encounter;
+import RPG.RunGame.Instructions;
 import RPG.RunGame.StartGame;
 
 /**
@@ -19,11 +21,13 @@ public class Model
 {
 
     private View view;
+    private final Instructions instructions;
     private final StartGame startGame;
     private Game game;
     private Encounter encounter;
     private final GameSave gameSave;
     private final HighScore highScore;
+    private final Leaderboard leaderBoard;
     private final DBManager db;
 
     public Model()
@@ -32,11 +36,18 @@ public class Model
         gameSave = new GameSave(db);
         startGame = new StartGame(gameSave);
         highScore = new HighScore(db);
+        leaderBoard = new Leaderboard(db);
+        instructions = new Instructions();
     }
 
     public void setView(View view)
     {
         this.view = view;
+    }
+    
+    public void getInstructions()
+    {
+        view.popUp2(instructions.getOutput(), "Instructions");
     }
 
     public void newGame()
@@ -147,15 +158,24 @@ public class Model
         if(highScore.addHighScore(game.getPlayer().getName(), game.getMapSize()))
         {
             view.updateMainLabel("Highscore succesfully added");
+            view.disableScoreButton();
         }
         else
         {
             view.updateErrorLabel("Higher highscore already added. Play again to get a better one!");
         }
     }
+    
+    public void saveLeaderboard()
+    {
+        leaderBoard.addHighScore(game.getPlayer().getName(), game.getMapSize());
+        view.updateMainLabel("Leaderboard succesfully added");
+        view.disableLeaderButton();
+    }
 
     public void quitGame()
     {
+        view.enableSaveButtons();
         view.setEndGameScreen();
     }
 
@@ -171,11 +191,11 @@ public class Model
 
     public void showLeaderboard()
     {
-       
+       view.popUp(leaderBoard.printLeaderboard(), "Top 10 Leader Board");
     }
 
     public void showScoreboard()
     {
-        view.popUp(highScore.printHighScore(), "High Scores:");
+        view.popUp(highScore.printHighScore(), "Top 10 High Scores");
     }
 }

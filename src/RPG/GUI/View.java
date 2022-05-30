@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -39,7 +40,7 @@ public class View extends JFrame
     private JLabel errorLabel, mainLabel, playerHealth, playerDamage, playerRollModifier, playerArmourClass, enemyHealth, roomsLeft;
     private JList classList;
     private JSpinner numRoomSpinner;
-    private JButton attack, block, skill;
+    private JButton attack, block, skill, saveScoreButton, saveLeaderButton;
 
     public View(Controller controller)
     {
@@ -504,6 +505,7 @@ public class View extends JFrame
         leaderBoardButton.setBackground(Color.black);
         leaderBoardButton.setForeground(Color.white);
         leaderBoardButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        leaderBoardButton.addActionListener(controller.showLeaderBoardHandler());
 
         JButton newButton = new JButton("NEW GAME");
         newButton.setBackground(Color.black);
@@ -586,16 +588,17 @@ public class View extends JFrame
         panel2.add(playerHealth);
         panel2.add(roomsLeft);
 
-        JButton saveButton = new JButton("SAVE SCORE TO SCOREBOARD");
-        saveButton.setBackground(Color.black);
-        saveButton.setForeground(Color.white);
-        saveButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        saveButton.addActionListener(controller.scoreBoardHandler());
+        saveScoreButton = new JButton("SAVE SCORE TO SCOREBOARD");
+        saveScoreButton.setBackground(Color.black);
+        saveScoreButton.setForeground(Color.white);
+        saveScoreButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        saveScoreButton.addActionListener(controller.scoreBoardHandler());
 
-        JButton exitButton = new JButton("SAVE SCORE TO LEADERBOARD");
-        exitButton.setBackground(Color.black);
-        exitButton.setForeground(Color.white);
-        exitButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        saveLeaderButton = new JButton("SAVE SCORE TO LEADERBOARD");
+        saveLeaderButton.setBackground(Color.black);
+        saveLeaderButton.setForeground(Color.white);
+        saveLeaderButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        saveLeaderButton.addActionListener(controller.saveLeaderBoardHandler());
 
         JButton quitButton = new JButton("EXIT GAME");
         quitButton.setBackground(Color.black);
@@ -603,8 +606,8 @@ public class View extends JFrame
         quitButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
         quitButton.addActionListener(controller.quitGameHandler());
 
-        panel4.add(saveButton);
-        panel4.add(exitButton);
+        panel4.add(saveScoreButton);
+        panel4.add(saveLeaderButton);
         panel4.add(quitButton);
         panel.add(label);
 
@@ -623,9 +626,18 @@ public class View extends JFrame
     public void popUp(List<String> list, String name)
     {
         JFrame frame = new JFrame(name);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.black);
         frame.setMinimumSize(new Dimension(50, 100));
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        if (name.equals("Top 10 High Scores"))
+        {
+            frame.setLocation(100, 100);
+        }
+        else
+        {
+            frame.setLocation(100, 500);
+        }
 
         JLabel label = new JLabel();
         label.setBackground(Color.black);
@@ -647,6 +659,32 @@ public class View extends JFrame
         frame.pack();
     }
 
+    public void popUp2(String popUp, String name)
+    {
+        JFrame frame = new JFrame(name);
+        frame.getContentPane().setBackground(Color.black);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.black);
+        JScrollPane scroll = new JScrollPane(panel);
+        scroll.setBackground(Color.black);
+
+        JLabel label = new JLabel();
+        label.setBackground(Color.black);
+        label.setForeground(Color.white);
+        label.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+
+        label.setText(popUp);
+        panel.add(label);
+
+        frame.add(scroll);
+
+        frame.setSize(700, 600);
+        frame.setVisible(true);
+    }
+
     public void disableEncounterButtons()
     {
         attack.setEnabled(false);
@@ -659,6 +697,31 @@ public class View extends JFrame
         attack.setEnabled(true);
         block.setEnabled(true);
         skill.setEnabled(true);
+    }
+
+    public void disableScoreButton()
+    {
+        if (saveScoreButton != null)
+        {
+            saveScoreButton.setEnabled(false);
+        }
+    }
+
+    public void disableLeaderButton()
+    {
+        if (saveLeaderButton != null)
+        {
+            saveLeaderButton.setEnabled(false);
+        }
+    }
+
+    public void enableSaveButtons()
+    {
+        if (saveLeaderButton != null && saveScoreButton != null)
+        {
+            saveScoreButton.setEnabled(true);
+            saveLeaderButton.setEnabled(true);
+        }
     }
 
     public void updateMainLabel(String text)

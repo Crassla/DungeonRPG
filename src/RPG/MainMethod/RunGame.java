@@ -5,7 +5,6 @@
 package RPG.MainMethod;
 
 import RPG.GUI.GUI;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -15,16 +14,8 @@ import javax.swing.SwingUtilities;
  */
 public class RunGame
 {
-
     public static void main(String args[])
     {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                GUI gui = new GUI();
-            }
-        });
+        new GUI();
     }
 }

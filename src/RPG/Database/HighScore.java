@@ -63,7 +63,7 @@ public class HighScore
 
         try
         {
-            rs = this.statement.executeQuery("SELECT * FROM HIGHSCORES");
+            rs = this.statement.executeQuery("SELECT * FROM HIGHSCORES ORDER BY SCORE DESC");
 
             while (rs.next())
             {

@@ -230,4 +230,46 @@ public class Controller
 
         return listener;
     }
+    
+    public ActionListener saveLeaderBoardHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.saveLeaderboard();
+            }
+        };
+
+        return listener;
+    }
+    
+    public ActionListener showLeaderBoardHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.showLeaderboard();
+            }
+        };
+
+        return listener;
+    }
+    
+    public ActionListener showInstructionsHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.getInstructions();
+            }
+        };
+
+        return listener;
+    }
 }
