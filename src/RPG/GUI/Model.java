@@ -79,9 +79,18 @@ public class Model
 
     public void createEncounterScreen()
     {
-        encounter = new Encounter(game.getPlayer(), game.getPlayer().getRoom().getEnemy(), view, game);
+        if (game.mapEmpty())
+        {
+            view.setBoardScreen();
+            view.setEncounterPlayerHealth(game.getPlayer().getName());
+            view.setRoomLabel(game.getMapLength() + "");
+        }
+        else
+        {
+            encounter = new Encounter(game.getPlayer(), game.getPlayer().getRoom().getEnemy(), view, game);
 
-        encounter.runEncounter();
+            encounter.runEncounter();
+        }
     }
 
     public void attack()
@@ -114,6 +123,7 @@ public class Model
         if (gameSave.getAskOverWrite() && !gameSave.getOverWrite())
         {
             gameSave.setOverrite();
+            view.setEndGameScreen();
         }
 
         if (!gameSave.saveGame(game))
@@ -121,9 +131,29 @@ public class Model
             view.updateErrorLabel("Save already exists, click save again to overwrite otherwise click don't save to cancel");
         }
     }
-    
+
     public void quitGame()
     {
         view.setEndGameScreen();
+    }
+    
+    public void closeGame()
+    {
+        view.dispose();
+    }
+    
+    public void restartGame()
+    {
+        view.setTitleScreen();
+    }
+    
+    public void showLeaderboard()
+    {
+        view.setTitleScreen();
+    }
+    
+    public void showScoreboard()
+    {
+        view.setTitleScreen();
     }
 }

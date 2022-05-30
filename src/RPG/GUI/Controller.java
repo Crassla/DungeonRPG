@@ -174,4 +174,32 @@ public class Controller
 
         return listener;
     }
+    
+    public ActionListener closeGameHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.closeGame();
+            }
+        };
+
+        return listener;
+    }
+    
+    public ActionListener restartGameHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.restartGame();
+            }
+        };
+
+        return listener;
+    }
 }

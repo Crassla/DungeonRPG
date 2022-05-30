@@ -173,6 +173,11 @@ public class Encounter
                 {
                     block = block - enemy.getDamage();// takes away the block by the enemies damage
                 }
+                
+                if (player.getHealth() == 0)
+                {
+                    endEncounter();
+                }
             }
             else
             {
@@ -190,8 +195,8 @@ public class Encounter
     public void runEncounter()
     {
         view.setEncounterScreen();
-        view.setEnemyHealth(player.getHealth() + "");
-        view.setEncounterPlayerHealth(enemy.getHealth() + "");
+        view.setEnemyHealth(enemy.getHealth() + "");
+        view.setEncounterPlayerHealth(player.getHealth() + "");
         view.updateMainLabel(player.getRoom().toString());
     }
 

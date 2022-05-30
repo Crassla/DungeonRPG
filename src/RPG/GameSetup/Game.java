@@ -132,6 +132,11 @@ public class Game
     {
         return this.map.size();
     }
+    
+    public boolean mapEmpty()
+    {
+        return this.map.isEmpty();
+    }
 
     //returns the player
     public Player getPlayer()
