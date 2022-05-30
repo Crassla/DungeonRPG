@@ -8,6 +8,7 @@ import RPG.Database.DBManager;
 import RPG.Database.GameSave;
 import RPG.Database.HighScore;
 import RPG.Database.Leaderboard;
+import RPG.Database.Logger;
 import RPG.GameSetup.Game;
 import RPG.RunGame.Encounter;
 import RPG.RunGame.Instructions;
@@ -28,40 +29,47 @@ public class Model
     private final GameSave gameSave;
     private final HighScore highScore;
     private final Leaderboard leaderBoard;
+    private final Logger log;
     private final DBManager db;
 
     public Model()
     {
         db = new DBManager();
-        gameSave = new GameSave(db);
+        log = new Logger(db);
+        gameSave = new GameSave(db, log);
         startGame = new StartGame(gameSave);
-        highScore = new HighScore(db);
-        leaderBoard = new Leaderboard(db);
+        highScore = new HighScore(db, log);
+        leaderBoard = new Leaderboard(db, log);
         instructions = new Instructions();
     }
 
     public void setView(View view)
     {
+        log.log("set view");
         this.view = view;
     }
     
     public void getInstructions()
     {
+        log.log("get instructions");
         view.popUp2(instructions.getOutput(), "Instructions");
     }
 
     public void newGame()
     {
+        log.log("new game");
         view.setNewGameScreen();
     }
 
     public void loadGame()
     {
+        log.log("load game");
         view.setLoadScreen();
     }
 
     public void createGameScreen()
     {
+        log.log("create game screen");
         int numRooms = view.getNumRooms();
         int playerClass = view.getPlayerClass() + 1;
         String playerName = view.getPlayerName().toLowerCase();
@@ -74,6 +82,7 @@ public class Model
 
     public void updateGameLabels()
     {
+        log.log("update game labels");
         view.setPlayerHealthLabel(game.getPlayer().getName(), game.getPlayer().getPlayerClass(), "" + game.getPlayer().getHealth());
         view.setPlayerDamageLabel("" + game.getPlayer().getDamage());
         view.setPlayerArmourLabel("" + game.getPlayer().getArmourClass());
@@ -83,6 +92,7 @@ public class Model
 
     public void loadGameScreen()
     {
+        log.log("load game screen");
         game = startGame.loadGame(view.getLoadTextField());
         if (game == null)
         {
@@ -97,6 +107,7 @@ public class Model
 
     public void createEncounterScreen()
     {
+        log.log("create encounter screen");
         if (game.mapEmpty())
         {
             view.setBoardScreen();
@@ -113,30 +124,35 @@ public class Model
 
     public void attack()
     {
+        log.log("attack");
         view.disableEncounterButtons();
         encounter.attack();
     }
 
     public void block()
     {
+        log.log("block");
         view.disableEncounterButtons();
         encounter.block();
     }
 
     public void skill()
     {
+        log.log("skill");
         view.disableEncounterButtons();
         encounter.skill();
     }
 
     public void exitGame()
     {
+        log.log("exit game");
         view.setSaveScreen();
         updateGameLabels();
     }
 
     public void saveGame()
     {
+        log.log("save game");
         if (gameSave.getAskOverWrite() && !gameSave.getOverWrite())
         {
             gameSave.setOverrite(true);
@@ -155,6 +171,7 @@ public class Model
     
     public void saveHighScore()
     {
+        log.log("save high score");
         if(highScore.addHighScore(game.getPlayer().getName(), game.getMapSize()))
         {
             view.updateMainLabel("Highscore succesfully added");
@@ -168,6 +185,7 @@ public class Model
     
     public void saveLeaderboard()
     {
+        log.log("save leaderboard");
         leaderBoard.addHighScore(game.getPlayer().getName(), game.getMapSize());
         view.updateMainLabel("Leaderboard succesfully added");
         view.disableLeaderButton();
@@ -175,27 +193,33 @@ public class Model
 
     public void quitGame()
     {
+        log.log("quit game");
         view.enableSaveButtons();
         view.setEndGameScreen();
     }
 
     public void closeGame()
     {
+        log.log("close game");
+        db.closeConnections();
         view.dispose();
     }
 
     public void restartGame()
     {
+        log.log("restart game");
         view.setTitleScreen();
     }
 
     public void showLeaderboard()
     {
+        log.log("show leaderboard");
        view.popUp(leaderBoard.printLeaderboard(), "Top 10 Leader Board");
     }
 
     public void showScoreboard()
     {
+        log.log("show leaderboard");
         view.popUp(highScore.printHighScore(), "Top 10 High Scores");
     }
 }

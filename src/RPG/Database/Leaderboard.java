@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  *
@@ -23,15 +22,17 @@ public class Leaderboard
     private final DBManager dbManager;
     private final Connection conn;
     private Statement statement;
+    private final Logger log;
 
-    public Leaderboard(DBManager db)
+    public Leaderboard(DBManager db, Logger log)
     {
         dbManager = db;
         conn = dbManager.getConnection();
-        connectHighScoreDB();
+        connectLeaderBoardDB();
+        this.log = log;
     }
 
-    private void connectHighScoreDB()
+    private void connectLeaderBoardDB()
     {
         try
         {
@@ -48,7 +49,7 @@ public class Leaderboard
         }
         catch (SQLException ex)
         {
-            java.util.logging.Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(ex + "");
         }
     }
 
@@ -82,7 +83,7 @@ public class Leaderboard
         }
         catch (SQLException ex)
         {
-            java.util.logging.Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(ex + "");
         }
 
         return highScores;
@@ -96,7 +97,7 @@ public class Leaderboard
         }
         catch (SQLException ex)
         {
-            java.util.logging.Logger.getLogger(HighScore.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(ex + "");
         }
     }
 
@@ -124,6 +125,7 @@ public class Leaderboard
         }
         catch (SQLException ex)
         {
+            log.log(ex + "");
         }
 
         return false;

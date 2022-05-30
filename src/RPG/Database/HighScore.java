@@ -12,7 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,12 +23,14 @@ public class HighScore
     private final DBManager dbManager;
     private final Connection conn;
     private Statement statement;
+    private final Logger log;
 
-    public HighScore(DBManager db)
+    public HighScore(DBManager db, Logger log)
     {
         dbManager = db;
         conn = dbManager.getConnection();
         connectHighScoreDB();
+        this.log = log;
     }
 
     private void connectHighScoreDB()
@@ -49,7 +50,7 @@ public class HighScore
         }
         catch (SQLException ex)
         {
-            java.util.logging.Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(ex + "");
         }
     }
 
@@ -83,7 +84,7 @@ public class HighScore
         }
         catch (SQLException ex)
         {
-            java.util.logging.Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(ex + "");
         }
 
         return highScores;
@@ -103,7 +104,7 @@ public class HighScore
                 }
                 catch (SQLException ex)
                 {
-                    Logger.getLogger(HighScore.class.getName()).log(Level.SEVERE, null, ex);
+                    log.log(ex + "");
                 }
                 return true;
             }
@@ -120,7 +121,7 @@ public class HighScore
             }
             catch (SQLException ex)
             {
-                Logger.getLogger(HighScore.class.getName()).log(Level.SEVERE, null, ex);
+                log.log(ex + "");
             }
             return true;
         }
@@ -151,7 +152,7 @@ public class HighScore
         }
         catch (SQLException ex)
         {
-            java.util.logging.Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(ex + "");
         }
 
         return -1;
@@ -181,6 +182,7 @@ public class HighScore
         }
         catch (SQLException ex)
         {
+            log.log(ex + "");
         }
 
         return false;

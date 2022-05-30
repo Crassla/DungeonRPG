@@ -14,8 +14,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -26,17 +24,19 @@ public class GameSave
 
     private final DBManager dbManager;
     private final Connection conn;
+    private final Logger log;
     private Statement statement;
 
     private boolean overWrite;
     private boolean askOverWrite;
 
-    public GameSave(DBManager db)
+    public GameSave(DBManager db, Logger log)
     {
         dbManager = db;
         conn = dbManager.getConnection();
         connectGameSaveDB();
         askOverWrite = false;
+        this.log = log;
     }
 
     public void setOverrite(boolean input)
@@ -76,7 +76,7 @@ public class GameSave
         }
         catch (SQLException ex)
         {
-            Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(ex + "");
         }
     }
 
@@ -113,7 +113,7 @@ public class GameSave
         }
         catch (SQLException ex)
         {
-            Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(ex + "");
         }
 
         return null;
@@ -174,7 +174,7 @@ public class GameSave
             }
             catch (SQLException ex)
             {
-                Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+                log.log(ex + "");
             }
             return true;
         }
@@ -190,7 +190,7 @@ public class GameSave
                 }
                 catch (SQLException ex)
                 {
-                    Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+                    log.log(ex + "");
                 }
 
                 overWrite = false;
@@ -228,7 +228,7 @@ public class GameSave
         }
         catch (SQLException ex)
         {
-            Logger.getLogger(GameSave.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(ex + "");
         }
 
         return false;
@@ -258,6 +258,7 @@ public class GameSave
         }
         catch (SQLException ex)
         {
+            log.log(ex + "");
         }
 
         return false;
