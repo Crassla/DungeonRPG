@@ -6,6 +6,7 @@ package RPG.GUI;
 
 import RPG.Database.DBManager;
 import RPG.Database.GameSave;
+import RPG.Database.HighScore;
 import RPG.GameSetup.Game;
 import RPG.RunGame.Encounter;
 import RPG.RunGame.StartGame;
@@ -18,10 +19,11 @@ public class Model
 {
 
     private View view;
-    private StartGame startGame;
+    private final StartGame startGame;
     private Game game;
     private Encounter encounter;
-    private GameSave gameSave;
+    private final GameSave gameSave;
+    private final HighScore highScore;
     private final DBManager db;
 
     public Model()
@@ -29,6 +31,7 @@ public class Model
         db = new DBManager();
         gameSave = new GameSave(db);
         startGame = new StartGame(gameSave);
+        highScore = new HighScore(db);
     }
 
     public void setView(View view)
@@ -87,7 +90,7 @@ public class Model
         {
             view.setBoardScreen();
             view.setEncounterPlayerHealth(game.getPlayer().getName());
-            view.setRoomLabel(game.getMapLength() + "");
+            view.setRoomLabel(game.getMapLength() + 1 + "");
         }
         else
         {
@@ -138,6 +141,18 @@ public class Model
             view.setEndGameScreen();
         }
     }
+    
+    public void saveHighScore()
+    {
+        if(highScore.addHighScore(game.getPlayer().getName(), game.getMapSize()))
+        {
+            view.updateMainLabel("Highscore succesfully added");
+        }
+        else
+        {
+            view.updateErrorLabel("Higher highscore already added. Play again to get a better one!");
+        }
+    }
 
     public void quitGame()
     {
@@ -156,11 +171,11 @@ public class Model
 
     public void showLeaderboard()
     {
-        view.setTitleScreen();
+       
     }
 
     public void showScoreboard()
     {
-        view.setTitleScreen();
+        view.popUp(highScore.printHighScore(), "High Scores:");
     }
 }

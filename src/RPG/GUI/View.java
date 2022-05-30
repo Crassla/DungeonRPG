@@ -6,7 +6,9 @@ package RPG.GUI;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -48,6 +50,7 @@ public class View extends JFrame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.black);
         this.setLocationRelativeTo(null);
+        this.setTitle("DUNGEON RPG");
 
         container = this.getContentPane();
 
@@ -162,7 +165,7 @@ public class View extends JFrame
         textButton2.setFont(new Font("Times New Roman", Font.BOLD, 20));
         textButton2.setFocusPainted(false);
         textButton2.addActionListener(controller.restartGameHandler());
-        
+
         loadTextPanel.add(textButton2);
 
         loadGameScreen.add(Box.createVerticalStrut(50));
@@ -495,6 +498,7 @@ public class View extends JFrame
         scoreBoardButton.setBackground(Color.black);
         scoreBoardButton.setForeground(Color.white);
         scoreBoardButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        scoreBoardButton.addActionListener(controller.showScoreBoardHandler());
 
         JButton leaderBoardButton = new JButton("SHOW LEADERBOARD");
         leaderBoardButton.setBackground(Color.black);
@@ -586,6 +590,7 @@ public class View extends JFrame
         saveButton.setBackground(Color.black);
         saveButton.setForeground(Color.white);
         saveButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        saveButton.addActionListener(controller.scoreBoardHandler());
 
         JButton exitButton = new JButton("SAVE SCORE TO LEADERBOARD");
         exitButton.setBackground(Color.black);
@@ -613,6 +618,33 @@ public class View extends JFrame
 
         this.validate();
         this.repaint();
+    }
+
+    public void popUp(List<String> list, String name)
+    {
+        JFrame frame = new JFrame(name);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setBackground(Color.black);
+        frame.setMinimumSize(new Dimension(50, 100));
+
+        JLabel label = new JLabel();
+        label.setBackground(Color.black);
+        label.setForeground(Color.white);
+        label.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+
+        String output = ("<html>" + name + "<br><br>");
+
+        for (String s : list)
+        {
+            output += s + "<br>";
+        }
+
+        output += "</html>";
+        label.setText(output);
+        frame.add(label);
+
+        frame.setVisible(true);
+        frame.pack();
     }
 
     public void disableEncounterButtons()

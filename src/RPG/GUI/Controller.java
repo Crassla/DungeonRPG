@@ -202,4 +202,32 @@ public class Controller
 
         return listener;
     }
+    
+    public ActionListener scoreBoardHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.saveHighScore();
+            }
+        };
+
+        return listener;
+    }
+    
+    public ActionListener showScoreBoardHandler()
+    {
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                model.showScoreboard();
+            }
+        };
+
+        return listener;
+    }
 }

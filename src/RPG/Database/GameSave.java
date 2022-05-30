@@ -13,7 +13,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -104,7 +103,7 @@ public class GameSave
                 if (playerName.equals(name))
                 {
                     rs.close();
-                    statement.executeUpdate("DELETE FROM GAMESAVES WHERE USERNAME='" + playerName + "'");;
+                    statement.executeUpdate("DELETE FROM GAMESAVES WHERE USERNAME='" + playerName + "'");
                     return loadGame(playerName, playerType, health, maxhealth, damage, armourClass, rollModifier, currentRoomNum, totalRoomNum);
                 }
             }

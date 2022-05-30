@@ -18,12 +18,17 @@ public final class DBManager
     private static final String USER_NAME = "pdc"; //your DB username
     private static final String PASSWORD = "pdc"; //your DB password
     private static final String URL = "jdbc:derby:DungeonRPG; create=true";  //url of the DB host
+    
+    private boolean overWrite;
+    private boolean askOverWrite;
 
     Connection conn;
 
     public DBManager()
     {
         establishConnection();
+        askOverWrite = false;
+        overWrite = false;
     }
 
     public Connection getConnection()
