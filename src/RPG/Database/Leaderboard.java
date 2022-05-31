@@ -130,9 +130,4 @@ public class Leaderboard
 
         return false;
     }
-
-    public void closeConnection()
-    {
-        this.dbManager.closeConnections();
-    }
 }

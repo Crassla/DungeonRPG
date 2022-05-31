@@ -118,9 +118,4 @@ public class Logger
 
         return false;
     }
-
-    public void closeConnection()
-    {
-        this.dbManager.closeConnections();
-    }
 }

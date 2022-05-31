@@ -263,9 +263,4 @@ public class GameSave
 
         return false;
     }
-
-    public void closeConnection()
-    {
-        this.dbManager.closeConnections();
-    }
 }
