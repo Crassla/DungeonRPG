@@ -5,7 +5,6 @@
 package RPG.Database;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -43,7 +42,7 @@ public class Logger
             }
             else
             { //if it doesn't exist it creates the table
-                statement.addBatch("CREATE TABLE LOG (ID INT NOT NULL AUTO_INCREMENT, LOG VARCHAR(100))"); 
+                statement.addBatch("CREATE TABLE LOG (LOG VARCHAR(100))"); 
                 statement.executeBatch();
             }
         }
@@ -73,21 +72,20 @@ public class Logger
     public String getLog(int id)
     {
         ResultSet rs = null;
-        String output = "";
         
         try
         {
             rs = statement.executeQuery("SELECT * FROM LOG");
+            int count = 0;
             
             while(rs.next())
             {
-                int thisId = rs.getInt("ID");
                 String s = rs.getString("LOG");
-                
-                if (thisId == id)
+                if (count == id)
                 {
-                    output = s;
+                    return s;
                 }
+                count++;
             }
             
         }
@@ -95,6 +93,6 @@ public class Logger
         {
         }
         
-        return output;
+        return "";
     }
 }

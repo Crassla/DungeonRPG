@@ -42,7 +42,7 @@ public class View extends JFrame
     private JLabel errorLabel, mainLabel, playerHealth, playerDamage, playerRollModifier, playerArmourClass, enemyHealth, roomsLeft;
     private JList classList;
     private JSpinner numRoomSpinner;
-    private JButton attack, block, skill, saveScoreButton, saveLeaderButton;
+    private JButton attack, block, skill, saveScoreButton, saveLeaderButton, exit;
 
     public View(Controller controller)
     {
@@ -410,7 +410,7 @@ public class View extends JFrame
         move.setFont(new Font("Times New Roman", Font.BOLD, 20));
         move.addActionListener(controller.moveHandler());
 
-        JButton exit = new JButton("EXIT");
+        exit = new JButton("EXIT");
         exit.setBackground(Color.black);
         exit.setForeground(Color.white);
         exit.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -432,7 +432,7 @@ public class View extends JFrame
         mainGameScreen.add(Box.createVerticalStrut(70));
         mainGameScreen.add(panel3);
         mainGameScreen.add(Box.createVerticalStrut(90));
-
+        
         container.add(mainGameScreen);
 
         mainGameScreen.setVisible(true);
@@ -686,14 +686,13 @@ public class View extends JFrame
         panel1.setBackground(Color.black);
         JPanel panel2 = new JPanel();
         panel2.setBackground(Color.black);
-        JPanel panel5 = new JPanel();
-        panel5.setBackground(Color.black);
-        panel5.add(mainLabel);
+        JPanel panel4 = new JPanel();
+        panel4.setBackground(Color.black);
         JPanel panel3 = new JPanel();
         panel3.setBackground(Color.black);
         panel3.add(errorLabel);
-        JPanel panel4 = new JPanel();
-        panel4.setBackground(Color.black);
+        JPanel panel5 = new JPanel();
+        panel5.setBackground(Color.black);
 
         Border border1 = BorderFactory.createEmptyBorder();
         TitledBorder border2 = BorderFactory.createTitledBorder(border1, "Your final score:", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
@@ -720,6 +719,7 @@ public class View extends JFrame
         errorLabel.setForeground(Color.red);
         errorLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
         errorLabel.setText("");
+        errorLabel.setVisible(true);
 
         saveScoreButton = new JButton("SAVE SCORE TO SCOREBOARD");
         saveScoreButton.setBackground(Color.black);
@@ -742,15 +742,17 @@ public class View extends JFrame
         panel1.add(label);
         panel2.add(playerHealth);
         panel2.add(roomsLeft);
-        panel4.add(saveScoreButton);
-        panel4.add(saveLeaderButton);
-        panel4.add(quitButton);
+        panel3.add(errorLabel);
+        panel4.add(mainLabel);
+        panel5.add(saveScoreButton);
+        panel5.add(saveLeaderButton);
+        panel5.add(quitButton);
 
         boardScreen.add(panel1);
         boardScreen.add(panel2);
-        boardScreen.add(panel5);
         boardScreen.add(panel3);
         boardScreen.add(panel4);
+        boardScreen.add(panel5); 
 
         container.add(boardScreen);
 
@@ -856,6 +858,14 @@ public class View extends JFrame
         {
             saveScoreButton.setEnabled(true);
             saveLeaderButton.setEnabled(true);
+        }
+    }
+    
+    public void disableExitButton()
+    {
+        if (exit != null)
+        {
+            exit.setEnabled(false);
         }
     }
 

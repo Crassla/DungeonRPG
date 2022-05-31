@@ -195,6 +195,7 @@ public class Model
         }
         else
         {
+            System.out.println("Higher highscore already added. Play again to get a better one!");
             view.updateErrorLabel("Higher highscore already added. Play again to get a better one!");
         }
     }
@@ -204,6 +205,7 @@ public class Model
         log.log("save leaderboard");
         leaderBoard.addHighScore(game.getPlayer().getName(), game.getMapSize());
         view.updateMainLabel("Leaderboard succesfully added");
+        view.updateErrorLabel("");
         view.disableLeaderButton();
     }
 
@@ -218,7 +220,7 @@ public class Model
     {
         log.log("close game");
         db.closeConnections();
-        view.dispose();
+        System.exit(0);
     }
 
     public void restartGame()

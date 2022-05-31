@@ -189,16 +189,13 @@ public class GameSave
                 try
                 {
                     //updates the current save
-                    System.out.println("updating");
                     statement.executeUpdate("UPDATE GAMESAVES "
                             + "SET TYPE=" + playerType + ",  HEALTH=" + health + ", MAXHEALTH=" + maxHealth + ", DAMAGE=" + damage 
                             + ", AC=" + armourClass + ", RM=" + rollModifier + ", CRN=" + currentRoomNum + ", TRM=" + totalRoomNum 
                             + " WHERE USERNAME='" + playerName + "'");
-                    System.out.println("update");
                 }
                 catch (SQLException ex)
                 {
-                    System.out.println(ex + "");
                     log.log(ex + "");
                 }
 

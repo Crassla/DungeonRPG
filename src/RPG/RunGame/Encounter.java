@@ -254,6 +254,10 @@ public class Encounter
         view.setPlayerRollLabel("" + player.getRollModifier());
         view.setRoomLabel("" + game.getMapLength());
         view.updateMainLabel(output);
+        if (game.getMapLength() == 0)
+        {
+            view.disableExitButton();
+        }
         view.enableEncounterButtons();
     }
 }

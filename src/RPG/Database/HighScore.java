@@ -106,6 +106,8 @@ public class HighScore
                 {
                     statement.executeUpdate("DELETE FROM HIGHSCORES WHERE USERNAME='" + playerName + "'"); //if the score is higher it is deleted
                     statement.executeUpdate("INSERT INTO HIGHSCORES VALUES ('" + playerName + "'," + score + ")"); //then the higher one is inserted
+                    statement.executeUpdate("UPDATE HIGHSCORES"
+                            + "SET SCORE="+score+ " WHERE USERNAME='" + playerName + "'");
                 }
                 catch (SQLException ex)
                 {
