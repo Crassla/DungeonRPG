@@ -105,7 +105,7 @@ public class BarbarianTest
     public void testGetRoom()
     {
         System.out.println("getRoom");
-        int expResult = 1;
+        int expResult = 0;
         int result = player.getRoomNum();
         assertEquals(expResult, result);
     }

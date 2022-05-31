@@ -4,9 +4,7 @@
  */
 package RPG.GameSetup;
 
-import RPG.EnemyClasses.Enemy;
 import RPG.EnemyClasses.EnemyType;
-import RPG.RewardClasses.Reward;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
