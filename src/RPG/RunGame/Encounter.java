@@ -5,7 +5,7 @@
 package RPG.RunGame;
 
 import RPG.EnemyClasses.Enemy;
-import RPG.GUI.View;
+import RPG.GUIMVC.View;
 import RPG.GameSetup.Game;
 import RPG.PlayerClasses.Player;
 import java.awt.event.ActionEvent;

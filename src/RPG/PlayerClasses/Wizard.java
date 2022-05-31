@@ -14,7 +14,7 @@ public class Wizard extends Player
     //instantiates the wizard default class values using its super constructor
     public Wizard()
     {
-        super("Wizard", 40, 40, 30, 16, 10, 1);
+        super("Wizard", 40, 40, 30, 16, 10, 0);
     }
     
     //instantiates the wizard class from a previous save

@@ -16,7 +16,7 @@ import java.util.Random;
 public class Reward
 {
     //reward variables
-    private final int reward;
+    private int reward;
     private final RewardType rewardType;
     
     //instantiates a reward
@@ -26,6 +26,11 @@ public class Reward
         
         this.reward = rand.nextInt(10) + 1; //creates a random reward
         this.rewardType = rewardType; //sets the reward type
+    }
+    
+    public void setReward(int reward)
+    {
+        this.reward = reward;
     }
     
     //applies the reward to the player using the players methods

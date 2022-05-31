@@ -5,7 +5,6 @@
 package RPG.Database;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,15 +14,22 @@ import java.util.List;
 /**
  *
  * @author alex
+ * 
+ * This class maintains control over access to the leaderboard data and
+ * writes/reads from the leaderboard table.
+ *
+ * The leaderboard is for users to store their personal highscore for a
+ * character if they wish to
  */
 public class Leaderboard
 {
 
-    private final DBManager dbManager;
-    private final Connection conn;
-    private Statement statement;
-    private final Logger log;
+    private final DBManager dbManager; //instance of the DB manager to get the connection
+    private final Connection conn; //instance of the connection
+    private final Logger log; //logger class for any errors that occur
+    private Statement statement; //statement for SQL updates
 
+    //instantiates a leaderboard object
     public Leaderboard(DBManager db, Logger log)
     {
         dbManager = db;
@@ -32,18 +38,19 @@ public class Leaderboard
         this.log = log;
     }
 
+    //connects the leaderboard table up to the database
     private void connectLeaderBoardDB()
     {
         try
         {
             statement = conn.createStatement();
-            if (checkTable("LEADERBOARD"))
+            if (dbManager.checkTable("LEADERBOARD")) //checks if the table exists
             {
 
             }
             else
             {
-                statement.addBatch("CREATE TABLE LEADERBOARD (USERNAME VARCHAR(20), SCORE INT)");
+                statement.addBatch("CREATE TABLE LEADERBOARD (USERNAME VARCHAR(20), SCORE INT)"); //if it doesn't the table is created
                 statement.executeBatch();
             }
         }
@@ -53,7 +60,7 @@ public class Leaderboard
         }
     }
 
-    //prints the top 10 leaderboard
+    //returns a list of the top 10 leaderboard
     public List<String> printLeaderboard()
     {
         int count = 1;
@@ -63,14 +70,14 @@ public class Leaderboard
 
         try
         {
-            rs = this.statement.executeQuery("SELECT * FROM LEADERBOARD ORDER BY SCORE DESC");
+            rs = this.statement.executeQuery("SELECT * FROM LEADERBOARD ORDER BY SCORE DESC"); //gets the list in order of greatest score
 
             while (rs.next())
             {
                 String playerName = rs.getString("USERNAME");
                 int score = rs.getInt("SCORE");
 
-                highScores.add(count + ": " + (playerName + " [" + score + "]"));
+                highScores.add(count + ": " + (playerName + " [" + score + "]")); //adds the score to the list
                 count++;
 
                 if (count > 10)
@@ -89,6 +96,7 @@ public class Leaderboard
         return highScores;
     }
 
+    //adds a high score to the database
     public void addHighScore(String playerName, int score)
     {
         try
@@ -99,35 +107,5 @@ public class Leaderboard
         {
             log.log(ex + "");
         }
-    }
-
-    public boolean checkTable(String name)
-    {
-        try
-        {
-            DatabaseMetaData dbmd = this.conn.getMetaData();
-            String[] types =
-            {
-                "TABLE"
-            };
-            statement = this.conn.createStatement();
-            ResultSet rs = dbmd.getTables(null, null, null, types);
-
-            while (rs.next())
-            {
-                String table_name = rs.getString("TABLE_NAME");
-                if (table_name.equalsIgnoreCase(name))
-                {
-                    return true;
-                }
-            }
-            rs.close();
-        }
-        catch (SQLException ex)
-        {
-            log.log(ex + "");
-        }
-
-        return false;
     }
 }

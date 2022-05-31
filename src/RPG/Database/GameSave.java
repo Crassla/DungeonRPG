@@ -10,7 +10,6 @@ import RPG.PlayerClasses.Paladin;
 import RPG.PlayerClasses.Player;
 import RPG.PlayerClasses.Wizard;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,18 +17,21 @@ import java.sql.Statement;
 /**
  *
  * @author alex
+ * 
+ * This class controls the saving and loading of the game
  */
 public class GameSave
 {
 
-    private final DBManager dbManager;
-    private final Connection conn;
-    private final Logger log;
-    private Statement statement;
+    private final DBManager dbManager; //instance of the DB manager to get the connection
+    private final Connection conn; //instance of the connection
+    private final Logger log; //logger class for any errors that occur
+    private Statement statement; //statement for SQL updates
 
-    private boolean overWrite;
-    private boolean askOverWrite;
+    private boolean overWrite; //is true if the user wants to overwrite
+    private boolean askOverWrite; //is true if the user has been asked if they want to overwrite
 
+    //isntantiating method for gamesave
     public GameSave(DBManager db, Logger log)
     {
         dbManager = db;
@@ -39,36 +41,37 @@ public class GameSave
         this.log = log;
     }
 
+    //sets the overwrite to an input value
     public void setOverrite(boolean input)
     {
         overWrite = input;
     }
 
+    //sets the ask overwrite to an input value
     public void setAskOverWrite(boolean input)
     {
         askOverWrite = input;
     }
 
+    //returns the over write
     public boolean getOverWrite()
     {
         return this.overWrite;
     }
 
+    //returns the ask over write
     public boolean getAskOverWrite()
     {
         return this.askOverWrite;
     }
 
+    //connects the table to the database
     private void connectGameSaveDB()
     {
         try
         {
             statement = conn.createStatement();
-            if (checkTable("GAMESAVES"))
-            {
-
-            }
-            else
+            if (!dbManager.checkTable("GAMESAVES")) //checks if the table has been created
             {
                 statement.addBatch("CREATE TABLE GAMESAVES (USERNAME VARCHAR(20), TYPE INT, HEALTH INT, MAXHEALTH INT, DAMAGE INT, AC INT, RM INT, CRN INT, TRM INT)");
                 statement.executeBatch();
@@ -80,13 +83,14 @@ public class GameSave
         }
     }
 
+    //checks if there is a save under the name name and returns a game if there is
     public Game findSavedGame(String name)
     {
         ResultSet rs = null;
 
         try
         {
-            rs = this.statement.executeQuery("SELECT * FROM GAMESAVES");
+            rs = this.statement.executeQuery("SELECT * FROM GAMESAVES"); //gets all the data from gavesaves
 
             while (rs.next())
             {
@@ -100,7 +104,7 @@ public class GameSave
                 int currentRoomNum = rs.getInt("CRN");
                 int totalRoomNum = rs.getInt("TRM");
 
-                if (playerName.equals(name))
+                if (playerName.equals(name)) //checks if the data is equal to the name given and if it is it returns the game
                 {
                     rs.close();
                     statement.executeUpdate("DELETE FROM GAMESAVES WHERE USERNAME='" + playerName + "'");
@@ -109,7 +113,7 @@ public class GameSave
             }
             
             rs.close();
-            return null;
+            return null; //otherwise it returns null
         }
         catch (SQLException ex)
         {
@@ -151,7 +155,7 @@ public class GameSave
     }
 
     //saves the game into a specific format
-    //returns true if the game was succesfully saved
+    //returns true if the game was succesfully saved and false if it was not
     public boolean saveGame(Game game)
     {
         //gets each part of the tokenized string
@@ -184,12 +188,17 @@ public class GameSave
             {
                 try
                 {
-                    statement.executeUpdate("DELETE FROM GAMESAVES WHERE USERNAME='" + playerName + "'");
-                    statement.executeUpdate("INSERT INTO GAMESAVES VALUES('" + playerName + "', " + playerType + "," + health + "," + maxHealth + "," + damage + ","
-                            + armourClass + "," + rollModifier + "," + currentRoomNum + "," + totalRoomNum + ")");
+                    //updates the current save
+                    System.out.println("updating");
+                    statement.executeUpdate("UPDATE GAMESAVES "
+                            + "SET TYPE=" + playerType + ",  HEALTH=" + health + ", MAXHEALTH=" + maxHealth + ", DAMAGE=" + damage 
+                            + ", AC=" + armourClass + ", RM=" + rollModifier + ", CRN=" + currentRoomNum + ", TRM=" + totalRoomNum 
+                            + " WHERE USERNAME='" + playerName + "'");
+                    System.out.println("update");
                 }
                 catch (SQLException ex)
                 {
+                    System.out.println(ex + "");
                     log.log(ex + "");
                 }
 
@@ -204,6 +213,8 @@ public class GameSave
         }
     }
 
+    //checks if a save has been made under the name inputted
+    //returns true if a save is found and false if a save is not found
     public boolean checkSave(String name)
     {
         ResultSet rs = null;
@@ -214,9 +225,9 @@ public class GameSave
 
             while (rs.next())
             {
-                String playerName = rs.getString("USERNAME");
+                String playerName = rs.getString("USERNAME"); 
 
-                if (playerName.equals(name))
+                if (playerName.equals(name)) //if  a matching name is found it returns true
                 {
                     rs.close();
                     return true;
@@ -225,36 +236,6 @@ public class GameSave
             
             rs.close();
             return false;
-        }
-        catch (SQLException ex)
-        {
-            log.log(ex + "");
-        }
-
-        return false;
-    }
-
-    public boolean checkTable(String name)
-    {
-        try
-        {
-            DatabaseMetaData dbmd = this.conn.getMetaData();
-            String[] types =
-            {
-                "TABLE"
-            };
-            statement = this.conn.createStatement();
-            ResultSet rs = dbmd.getTables(null, null, null, types);
-
-            while (rs.next())
-            {
-                String table_name = rs.getString("TABLE_NAME");
-                if (table_name.equalsIgnoreCase(name))
-                {
-                    return true;
-                }
-            }
-            rs.close();
         }
         catch (SQLException ex)
         {

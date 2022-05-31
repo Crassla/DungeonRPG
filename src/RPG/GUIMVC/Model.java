@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package RPG.GUI;
+package RPG.GUIMVC;
 
 import RPG.Database.DBManager;
 import RPG.Database.GameSave;
@@ -17,20 +17,26 @@ import RPG.RunGame.StartGame;
 /**
  *
  * @author alex
+ * 
+ * This class is the model in the MVC design It controls what happens when
+ * a controller has called it
  */
 public class Model
 {
 
-    private View view;
+    //final variables to be used by the mode
     private final Instructions instructions;
     private final StartGame startGame;
-    private Game game;
-    private Encounter encounter;
     private final GameSave gameSave;
     private final HighScore highScore;
     private final Leaderboard leaderBoard;
     private final Logger log;
     private final DBManager db;
+    
+    //varibles to be used by the model
+    private Game game;
+    private Encounter encounter;
+    private View view;
 
     public Model()
     {
@@ -48,7 +54,7 @@ public class Model
         log.log("set view");
         this.view = view;
     }
-    
+
     public void getInstructions()
     {
         log.log("get instructions");
@@ -74,10 +80,20 @@ public class Model
         int playerClass = view.getPlayerClass() + 1;
         String playerName = view.getPlayerName().toLowerCase();
 
-        game = startGame.newGame(numRooms, playerClass, playerName);
-
-        view.setGameScreen();
-        updateGameLabels();
+        if (playerName.length() == 0)
+        {
+            view.updateErrorLabel("You must input a username");
+        }
+        else if (playerName.length() < 20)
+        {
+            game = startGame.newGame(numRooms, playerClass, playerName);
+            view.setGameScreen();
+            updateGameLabels();
+        }
+        else
+        {
+            view.updateErrorLabel("Your username can be no larger than 20 characters");
+        }
     }
 
     public void updateGameLabels()
@@ -168,11 +184,11 @@ public class Model
             view.setEndGameScreen();
         }
     }
-    
+
     public void saveHighScore()
     {
         log.log("save high score");
-        if(highScore.addHighScore(game.getPlayer().getName(), game.getMapSize()))
+        if (highScore.addHighScore(game.getPlayer().getName(), game.getMapSize()))
         {
             view.updateMainLabel("Highscore succesfully added");
             view.disableScoreButton();
@@ -182,7 +198,7 @@ public class Model
             view.updateErrorLabel("Higher highscore already added. Play again to get a better one!");
         }
     }
-    
+
     public void saveLeaderboard()
     {
         log.log("save leaderboard");
@@ -214,7 +230,7 @@ public class Model
     public void showLeaderboard()
     {
         log.log("show leaderboard");
-       view.popUp(leaderBoard.printLeaderboard(), "Top 10 Leader Board");
+        view.popUp(leaderBoard.printLeaderboard(), "Top 10 Leader Board");
     }
 
     public void showScoreboard()

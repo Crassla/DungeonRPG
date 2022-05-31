@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package RPG.GUI;
+package RPG.GUIMVC;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -22,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
@@ -32,7 +35,6 @@ import javax.swing.border.TitledBorder;
 public class View extends JFrame
 {
 
-    private final ContentGenerator cg;
     private final Controller controller;
     private final Container container;
     private JPanel titleScreen, loadGameScreen, newGameScreen, mainGameScreen, encounterScreen, saveScreen, endGameScreen, boardScreen;
@@ -45,7 +47,6 @@ public class View extends JFrame
     public View(Controller controller)
     {
         this.controller = controller;
-        this.cg = new ContentGenerator(controller);
 
         this.setSize(1000, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,21 +68,6 @@ public class View extends JFrame
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         return panel;
-    }
-
-    public void setTitleScreen()
-    {
-        removeCurrentScreen();
-
-        titleScreen = initPanel(titleScreen);
-
-        titleScreen.add(Box.createVerticalStrut(50));
-        titleScreen.add(cg.titalPanel());
-        titleScreen.add(cg.startButtonPanel());
-
-        container.add(titleScreen);
-
-        this.setVisible(true);
     }
 
     private void removeCurrentScreen()
@@ -136,29 +122,99 @@ public class View extends JFrame
         this.repaint();
     }
 
+    public void setTitleScreen()
+    {
+        removeCurrentScreen();
+
+        titleScreen = initPanel(titleScreen);
+
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.black);
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.black);
+        JLabel label;
+
+        label = new JLabel("DUNGEON RPG");
+        label.setForeground(Color.white);
+        label.setFont(new Font("Times New Roman", Font.PLAIN, 80));
+
+        JButton startButton = new JButton("NEW GAME");
+        startButton.setBackground(Color.black);
+        startButton.setForeground(Color.white);
+        startButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        startButton.setFocusPainted(false);
+
+        JButton loadButton = new JButton("LOAD GAME");
+        loadButton.setBackground(Color.black);
+        loadButton.setForeground(Color.white);
+        loadButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        loadButton.setFocusPainted(false);
+
+        JButton lButton = new JButton("VIEW INSTRUCTIONS");
+        lButton.setBackground(Color.black);
+        lButton.setForeground(Color.white);
+        lButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        lButton.setFocusPainted(false);
+        
+        JButton exitButton = new JButton("QUIT GAME");
+        exitButton.setBackground(Color.black);
+        exitButton.setForeground(Color.white);
+        exitButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+
+        startButton.addActionListener(controller.newGameHandler());
+        loadButton.addActionListener(controller.loadGameHandler());
+        lButton.addActionListener(controller.showInstructionsHandler());
+        exitButton.addActionListener(controller.closeGameHandler());
+
+        panel1.add(label);
+        panel2.add(startButton);
+        panel2.add(loadButton);
+        panel2.add(lButton);
+        panel2.add(exitButton);
+
+        titleScreen.add(Box.createVerticalStrut(50));
+        titleScreen.add(panel1);
+        titleScreen.add(panel2);
+
+        container.add(titleScreen);
+
+        this.setVisible(true);
+    }
+
     public void setLoadScreen()
     {
         removeCurrentScreen();
 
         loadGameScreen = initPanel(loadGameScreen);
 
-        loadTextField = cg.loadTextField();
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.black);
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.black);
+        JPanel panel3 = new JPanel();
+        panel3.setBackground(Color.black);
 
-        errorLabel = cg.errorLabel();
-
-        JPanel loadTextPanel = cg.loadGameTextPanel();
-        loadTextPanel.add(loadTextField);
-
-        JPanel errorPanel = new JPanel();
-        errorPanel.add(errorLabel);
-        errorPanel.setBackground(Color.black);
-
-        JPanel labelPanel = new JPanel();
         JLabel label = new JLabel("LOAD PREVIOUS GAME");
         label.setForeground(Color.white);
         label.setFont(new Font("Times New Roman", Font.PLAIN, 50));
-        labelPanel.add(label);
-        labelPanel.setBackground(Color.black);
+
+        loadTextField = new JTextField(20);
+        loadTextField.setText("Enter Previous Name Here");
+        loadTextField.setBackground(Color.black);
+        loadTextField.setForeground(Color.white);
+        loadTextField.setFont(new Font("Times New Roman", Font.BOLD, 20));
+
+        errorLabel = new JLabel();
+        errorLabel.setBackground(Color.black);
+        errorLabel.setForeground(Color.red);
+        errorLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+
+        JButton textButton = new JButton("ENTER");
+        textButton.setBackground(Color.black);
+        textButton.setForeground(Color.white);
+        textButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        textButton.setFocusPainted(false);
+        textButton.addActionListener(controller.loadGameTextFieldHandler());
 
         JButton textButton2 = new JButton("EXIT");
         textButton2.setBackground(Color.black);
@@ -167,14 +223,18 @@ public class View extends JFrame
         textButton2.setFocusPainted(false);
         textButton2.addActionListener(controller.restartGameHandler());
 
-        loadTextPanel.add(textButton2);
+        panel1.add(label);
+        panel2.add(errorLabel);
+        panel3.add(textButton);
+        panel3.add(loadTextField);
+        panel3.add(textButton2);
 
         loadGameScreen.add(Box.createVerticalStrut(50));
-        loadGameScreen.add(labelPanel);
+        loadGameScreen.add(panel1);
         loadGameScreen.add(Box.createVerticalStrut(50));
-        loadGameScreen.add(errorPanel);
+        loadGameScreen.add(panel2);
         loadGameScreen.add(Box.createVerticalStrut(50));
-        loadGameScreen.add(loadTextPanel);
+        loadGameScreen.add(panel3);
 
         container.add(loadGameScreen);
 
@@ -189,20 +249,104 @@ public class View extends JFrame
         removeCurrentScreen();
 
         newGameScreen = initPanel(newGameScreen);
-        createGameTextField = cg.createGameTextField();
 
-        classList = cg.classList();
-        numRoomSpinner = cg.NumRoomsSpinner();
+        Font font = new Font("Times New Roman", Font.PLAIN, 20);
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.black);
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.black);
+        JPanel panel3 = new JPanel();
+        panel3.setBackground(Color.black);
+        JPanel panel4 = new JPanel();
+        panel4.setBackground(Color.black);
+        JPanel panel5 = new JPanel();
+        panel5.setBackground(Color.black);
+        JPanel panel6 = new JPanel();
+        panel6.setBackground(Color.black);
+        JLabel label;
+
+        label = new JLabel("CREATE NEW GAME");
+        label.setForeground(Color.white);
+        label.setFont(new Font("Times New Roman", Font.PLAIN, 50));
+
+        createGameTextField = new JTextField(20);
+        createGameTextField.setText("");
+        createGameTextField.setBackground(Color.black);
+        createGameTextField.setForeground(Color.white);
+        createGameTextField.setFont(new Font("Times New Roman", Font.BOLD, 20));
+
+        Border border1 = BorderFactory.createLineBorder(Color.white);
+        TitledBorder border2 = BorderFactory.createTitledBorder(border1, "Enter Characters Name", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
+
+        createGameTextField.setBorder(border2);
+        
+        errorLabel = new JLabel();
+        errorLabel.setBackground(Color.black);
+        errorLabel.setForeground(Color.red);
+        errorLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+
+        String[] classLists =
+        {
+            "Paladin", "Wizard", "Barbarian"
+        };
+
+        classList = new JList(classLists);
+        classList.setFixedCellWidth(250);
+        classList.setBackground(Color.black);
+        classList.setForeground(Color.white);
+        classList.setFont(font);
+
+        DefaultListCellRenderer renderer = (DefaultListCellRenderer) classList.getCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        TitledBorder border3 = BorderFactory.createTitledBorder(border1, "Choose Class", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
+
+        classList.setBorder(border3);
+
+        numRoomSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 20, 1));
+
+        JComponent editor = numRoomSpinner.getEditor();
+        JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
+        tf.setFont(font);
+        tf.setColumns(20);
+        tf.setBackground(Color.black);
+        tf.setForeground(Color.white);
+        tf.setHorizontalAlignment(SwingConstants.CENTER);
+        tf.setEditable(false);
+
+        TitledBorder border4 = BorderFactory.createTitledBorder(border1, "Chose Number of Rooms", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
+
+        tf.setBorder(border4);
+
+        numRoomSpinner.setBackground(Color.black);
+        numRoomSpinner.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+
+        JButton textButton = new JButton("ENTER");
+        textButton.setBackground(Color.black);
+        textButton.setForeground(Color.white);
+        textButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        textButton.setFocusPainted(false);
+        textButton.addActionListener(controller.createGameHandler());
+
+        panel1.add(label);
+        panel2.add(errorLabel);
+        panel3.add(classList);
+        panel4.add(numRoomSpinner);
+        panel5.add(createGameTextField);
+        panel6.add(textButton);
 
         newGameScreen.add(Box.createVerticalStrut(50));
-        newGameScreen.add(cg.newGamePanel());
-        newGameScreen.add(cg.newGameListPanel().add(classList));
+        newGameScreen.add(panel1);
         newGameScreen.add(Box.createVerticalStrut(50));
-        newGameScreen.add(cg.newGameNumRoomsPanel().add(numRoomSpinner));
+        newGameScreen.add(panel2);
+        newGameScreen.add(panel3);
+        newGameScreen.add(Box.createVerticalStrut(50));
+        newGameScreen.add(panel4);
         newGameScreen.add(Box.createVerticalStrut(10));
-        newGameScreen.add(createGameTextField);
+        newGameScreen.add(panel5);
         newGameScreen.add(Box.createVerticalStrut(10));
-        newGameScreen.add(cg.newGameButton());
+        newGameScreen.add(panel6);
+        newGameScreen.add(Box.createVerticalStrut(50));
 
         container.add(newGameScreen);
 
@@ -218,12 +362,10 @@ public class View extends JFrame
 
         mainGameScreen = initPanel(mainGameScreen);
 
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.black);
-
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.black);
         JPanel panel2 = new JPanel();
         panel2.setBackground(Color.black);
-
         JPanel panel3 = new JPanel();
         panel3.setBackground(Color.black);
         panel3.setBorder(null);
@@ -255,6 +397,13 @@ public class View extends JFrame
         roomsLeft.setForeground(Color.white);
         roomsLeft.setFont(new Font("Times New Roman", Font.PLAIN, 22));
 
+        mainLabel = new JLabel("", SwingConstants.CENTER);
+        mainLabel.setBackground(Color.black);
+        mainLabel.setForeground(Color.white);
+        mainLabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        mainLabel.setBorder(null);
+        mainLabel.setText("<html>You walk into a dark dungeon, on your left you see an entrance to a room<br><br> What do you want to do?</html>");
+
         JButton move = new JButton("MOVE");
         move.setBackground(Color.black);
         move.setForeground(Color.white);
@@ -267,22 +416,17 @@ public class View extends JFrame
         exit.setFont(new Font("Times New Roman", Font.BOLD, 20));
         exit.addActionListener(controller.exitGameHandler());
 
+        panel1.add(playerHealth);
+        panel1.add(playerDamage);
+        panel1.add(playerArmourClass);
+        panel1.add(playerRollModifier);
+        panel1.add(roomsLeft);
+        panel2.add(mainLabel);
         panel3.add(move);
         panel3.add(exit);
 
-        panel.add(playerHealth);
-        panel.add(playerDamage);
-        panel.add(playerArmourClass);
-        panel.add(playerRollModifier);
-        panel.add(roomsLeft);
-
-        mainLabel = cg.mainLabel();
-        panel2.add(mainLabel);
-
-        mainLabel.setText("<html>You walk into a dark dungeon, on your left you see an entrance to a room<br><br> What do you want to do?</html>");
-
         mainGameScreen.add(Box.createVerticalStrut(50));
-        mainGameScreen.add(panel);
+        mainGameScreen.add(panel1);
         mainGameScreen.add(Box.createVerticalStrut(70));
         mainGameScreen.add(panel2);
         mainGameScreen.add(Box.createVerticalStrut(70));
@@ -306,39 +450,27 @@ public class View extends JFrame
 
         JPanel panel = new JPanel();
         panel.setBackground(Color.black);
-
         JPanel panel1 = new JPanel();
         panel1.setBackground(Color.black);
-        panel1.setBounds(0, 0, 50, 0);
-
-        Border border3 = BorderFactory.createEmptyBorder();
-        TitledBorder border4 = BorderFactory.createTitledBorder(border3, "Player Health:", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
-
-        panel1.setBorder(border4);
-
-        JPanel panel4 = new JPanel();
-        panel4.setBackground(Color.black);
-        panel4.setBounds(0, 0, 50, 0);
-
-        Border border5 = BorderFactory.createEmptyBorder();
-        TitledBorder border6 = BorderFactory.createTitledBorder(border5, "Enemy Health:", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
-
-        panel.add(panel1);
-        panel.add(panel4);
-
-        panel4.setBorder(border6);
-
         JPanel panel2 = new JPanel();
         panel2.setBackground(Color.black);
-
         JPanel panel3 = new JPanel();
         panel3.setBackground(Color.black);
-        panel3.setBorder(null);
+        JPanel panel4 = new JPanel();
+        panel4.setBackground(Color.black);
 
         Border border1 = BorderFactory.createEmptyBorder();
-        TitledBorder border2 = BorderFactory.createTitledBorder(border1, "What will you do: >", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
+        TitledBorder border2 = BorderFactory.createTitledBorder(border1, "Player Health:", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
 
-        panel3.setBorder(border2);
+        panel1.setBorder(border2);
+
+        TitledBorder border3 = BorderFactory.createTitledBorder(border1, "Enemy Health:", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
+
+        panel4.setBorder(border3);
+
+        TitledBorder border4 = BorderFactory.createTitledBorder(border1, "What will you do: >", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
+
+        panel3.setBorder(border4);
 
         playerHealth = new JLabel();
         playerHealth.setForeground(Color.white);
@@ -366,15 +498,20 @@ public class View extends JFrame
         skill.setFont(new Font("Times New Roman", Font.BOLD, 20));
         skill.addActionListener(controller.skillHandler());
 
+        mainLabel = new JLabel("", SwingConstants.CENTER);
+        mainLabel.setBackground(Color.black);
+        mainLabel.setForeground(Color.white);
+        mainLabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        mainLabel.setBorder(null);
+
+        panel.add(panel1);
+        panel.add(panel4);
+        panel1.add(playerHealth);
+        panel2.add(mainLabel);
         panel3.add(attack);
         panel3.add(block);
         panel3.add(skill);
-
-        panel1.add(playerHealth);
         panel4.add(enemyHealth);
-
-        mainLabel = cg.mainLabel();
-        panel2.add(mainLabel);
 
         encounterScreen.add(Box.createVerticalStrut(50));
         encounterScreen.add(panel);
@@ -383,8 +520,6 @@ public class View extends JFrame
         encounterScreen.add(Box.createVerticalStrut(70));
         encounterScreen.add(panel3);
         encounterScreen.add(Box.createVerticalStrut(90));
-
-        mainLabel.setText("LOADED INTO ENCOUNTER");
 
         container.add(encounterScreen);
 
@@ -399,15 +534,13 @@ public class View extends JFrame
         Font font = new Font("Times New Roman", Font.BOLD, 20);
         saveScreen = initPanel(saveScreen);
 
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.black);
+        JLabel label;
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.black);
         JPanel panel2 = new JPanel();
         panel2.setBackground(Color.black);
         JPanel panel3 = new JPanel();
         panel3.setBackground(Color.black);
-        errorLabel = cg.errorLabel();
-        errorLabel.setText("");
-        panel3.add(errorLabel);
         JPanel panel4 = new JPanel();
         panel4.setBackground(Color.black);
 
@@ -415,10 +548,6 @@ public class View extends JFrame
         TitledBorder border2 = BorderFactory.createTitledBorder(border1, "Your current stats:", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font, Color.white);
 
         panel2.setBorder(border2);
-
-        JLabel label;
-
-        panel.setBackground(Color.black);
 
         label = new JLabel("SAVE CURRENT GAME");
         label.setForeground(Color.white);
@@ -444,11 +573,11 @@ public class View extends JFrame
         roomsLeft.setForeground(Color.white);
         roomsLeft.setFont(new Font("Times New Roman", Font.PLAIN, 22));
 
-        panel2.add(playerHealth);
-        panel2.add(playerDamage);
-        panel2.add(playerArmourClass);
-        panel2.add(playerRollModifier);
-        panel2.add(roomsLeft);
+        errorLabel = new JLabel();
+        errorLabel.setBackground(Color.black);
+        errorLabel.setForeground(Color.red);
+        errorLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        errorLabel.setText("");
 
         JButton saveButton = new JButton("SAVE");
         saveButton.setBackground(Color.black);
@@ -462,11 +591,17 @@ public class View extends JFrame
         exitButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
         exitButton.addActionListener(controller.quitGameHandler());
 
+        panel1.add(label);
+        panel2.add(playerHealth);
+        panel2.add(playerDamage);
+        panel2.add(playerArmourClass);
+        panel2.add(playerRollModifier);
+        panel2.add(roomsLeft);
+        panel3.add(errorLabel);
         panel4.add(saveButton);
         panel4.add(exitButton);
-        panel.add(label);
 
-        saveScreen.add(panel);
+        saveScreen.add(panel1);
         saveScreen.add(panel2);
         saveScreen.add(panel3);
         saveScreen.add(panel4);
@@ -483,14 +618,14 @@ public class View extends JFrame
 
         endGameScreen = initPanel(endGameScreen);
 
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.black);
+        JLabel label;
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.black);
         JPanel panel2 = new JPanel();
         panel2.setBackground(Color.black);
         JPanel panel3 = new JPanel();
         panel3.setBackground(Color.black);
 
-        JLabel label;
         label = new JLabel("EXIT DUNGEON RPG");
         label.setForeground(Color.white);
         label.setFont(new Font("Times New Roman", Font.PLAIN, 80));
@@ -519,17 +654,17 @@ public class View extends JFrame
         exitButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
         exitButton.addActionListener(controller.closeGameHandler());
 
-        panel2.add(mainLabel);
-
         mainLabel.setText("<html>Thank you for playing Dungeon RPG!<br><br>If you want to view the current "
                 + "scoreboard or leaderboard please click the button below. <br><br> If you wish to play again please click the play again button!</html>");
+
+        panel1.add(label);
+        panel2.add(mainLabel);
         panel3.add(scoreBoardButton);
         panel3.add(leaderBoardButton);
         panel3.add(newButton);
         panel3.add(exitButton);
-        panel.add(label);
 
-        endGameScreen.add(panel);
+        endGameScreen.add(panel1);
         endGameScreen.add(panel2);
         endGameScreen.add(panel3);
 
@@ -546,8 +681,9 @@ public class View extends JFrame
         Font font = new Font("Times New Roman", Font.BOLD, 20);
         boardScreen = initPanel(boardScreen);
 
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.black);
+        JLabel label;
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.black);
         JPanel panel2 = new JPanel();
         panel2.setBackground(Color.black);
         JPanel panel5 = new JPanel();
@@ -555,8 +691,6 @@ public class View extends JFrame
         panel5.add(mainLabel);
         JPanel panel3 = new JPanel();
         panel3.setBackground(Color.black);
-        errorLabel = cg.errorLabel();
-        errorLabel.setText("");
         panel3.add(errorLabel);
         JPanel panel4 = new JPanel();
         panel4.setBackground(Color.black);
@@ -566,12 +700,8 @@ public class View extends JFrame
 
         panel2.setBorder(border2);
 
-        JLabel label;
-
         mainLabel.setText("<html>Congratualtions for beating Dungeon RPG!<br><br>If you want to save your top score to the "
                 + "scoreboard or leaderboard please click the button below. <br><br> Once done click exit game to exit!</html>");
-
-        panel.setBackground(Color.black);
 
         label = new JLabel("SAVE CURRENT GAME");
         label.setForeground(Color.white);
@@ -585,8 +715,11 @@ public class View extends JFrame
         roomsLeft.setForeground(Color.white);
         roomsLeft.setFont(new Font("Times New Roman", Font.PLAIN, 22));
 
-        panel2.add(playerHealth);
-        panel2.add(roomsLeft);
+        errorLabel = new JLabel();
+        errorLabel.setBackground(Color.black);
+        errorLabel.setForeground(Color.red);
+        errorLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        errorLabel.setText("");
 
         saveScoreButton = new JButton("SAVE SCORE TO SCOREBOARD");
         saveScoreButton.setBackground(Color.black);
@@ -606,12 +739,14 @@ public class View extends JFrame
         quitButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
         quitButton.addActionListener(controller.quitGameHandler());
 
+        panel1.add(label);
+        panel2.add(playerHealth);
+        panel2.add(roomsLeft);
         panel4.add(saveScoreButton);
         panel4.add(saveLeaderButton);
         panel4.add(quitButton);
-        panel.add(label);
 
-        boardScreen.add(panel);
+        boardScreen.add(panel1);
         boardScreen.add(panel2);
         boardScreen.add(panel5);
         boardScreen.add(panel3);

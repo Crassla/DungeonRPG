@@ -4,8 +4,6 @@
  */
 package RPG.MainMethod;
 
-import RPG.GUI.GUI;
-
 /**
  *
  * @author alex

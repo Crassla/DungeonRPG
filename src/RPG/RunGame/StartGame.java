@@ -26,7 +26,7 @@ public class StartGame
     public Game newGame(int numRooms, int playerClass, String playerName)
     {
         
-        if (playerClass != -1 || !playerName.contains(":"))
+        if (playerClass != -1)
         {
             Game game = new Game(numRooms, playerClass);
             if (game != null)

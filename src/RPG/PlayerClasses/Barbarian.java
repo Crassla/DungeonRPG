@@ -16,7 +16,7 @@ public class Barbarian extends Player
     //instantiates the barbarian default class values using its super constructor
     public Barbarian()
     {
-        super("Barbarian", 45, 45, 50, 10, 10, 1);
+        super("Barbarian", 45, 45, 50, 10, 10, 0);
     }
 
     //instantiates the barbarian class from a previous save

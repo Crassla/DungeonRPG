@@ -16,7 +16,7 @@ public class Paladin extends Player
     //instantiates the paladin default class values using its super constructor
     public Paladin()
     {
-        super("Paladin", 50, 50, 22, 22, 8, 1);
+        super("Paladin", 50, 50, 22, 22, 8, 0);
     }
 
      //instantiates the paladin class from a previous save
