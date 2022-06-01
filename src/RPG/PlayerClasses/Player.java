@@ -226,7 +226,7 @@ abstract public class Player implements Nameable
         output += "          Health: " + this.health + "<br>";
         output += "          Damage: " + this.damage + "<br>";
         output += "          Armour Class: " + this.armourClass + "<br>";
-        output += "          rollModifier: " + this.rollModifier + "<br></html>";
+        output += "          Roll Modifier: " + this.rollModifier + "<br></html>";
 
         return output;
     }

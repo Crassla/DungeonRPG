@@ -26,6 +26,7 @@ public class Game
     private List<Room> map;
     private Player player;
     private int mapSize;
+    private String lastEnemy; //keeps reference to the last enemies name
 
     //instaniates a new game object
     public Game(int gameLength, int playerType)
@@ -122,6 +123,12 @@ public class Game
         player.setRoom(map.get(0)); //sets the players room to the first room in the map
     }
 
+    //returns the last enemy name
+    public String getLastEnemy()
+    {
+        return this.lastEnemy;
+    }
+    
     //returns the map size
     public int getMapSize()
     {
@@ -157,12 +164,13 @@ public class Game
         else
         {
             map.remove(0);
+            lastEnemy = player.getRoom().getEnemy().getName();
 
             if (map.isEmpty())
             {
                 return true;
             }
-
+            
             player.setRoom(map.get(0));
             return false;
         }

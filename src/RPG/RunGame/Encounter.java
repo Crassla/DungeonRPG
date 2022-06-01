@@ -214,7 +214,7 @@ public class Encounter
             output += (player) + "<br></html>";
             view.enableEncounterButtons();
             view.updateMainLabel(output);
-            Timer timer = new Timer(2000, new ActionListener()
+            Timer timer = new Timer(3000, new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent event)
@@ -239,7 +239,7 @@ public class Encounter
     public void applyReward()
     {
         String output = "<html>";
-        output += "You win against " + player.getRoom().getEnemy() + ". You won " + player.getRoom().getReward() + "<br>";
+        output += "You win against " + game.getLastEnemy() + ". You won " + player.getRoom().getReward() + "<br>";
         output += ("You rest and regain 20 health") + "<br><br>";
         player.setHealth(20);
         player.getRoom().getReward().addReward(player);
