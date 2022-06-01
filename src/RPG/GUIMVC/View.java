@@ -31,12 +31,14 @@ import javax.swing.border.TitledBorder;
 /**
  *
  * @author alex
+ * 
+ * This class is the view in the MVC design It controls what the user sees
  */
 public class View extends JFrame
 {
 
     private final Controller controller;
-    private final Container container;
+    private Container container;
     private JPanel titleScreen, loadGameScreen, newGameScreen, mainGameScreen, encounterScreen, saveScreen, endGameScreen, boardScreen;
     private JTextField loadTextField, createGameTextField;
     private JLabel errorLabel, mainLabel, playerHealth, playerDamage, playerRollModifier, playerArmourClass, enemyHealth, roomsLeft;
@@ -48,13 +50,18 @@ public class View extends JFrame
     {
         this.controller = controller;
 
-        this.setSize(1000, 600);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().setBackground(Color.black);
-        this.setLocationRelativeTo(null);
-        this.setTitle("DUNGEON RPG");
-
-        container = this.getContentPane();
+        initView();
+    }
+    
+    private void initView()
+    {
+        setSize(1000, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.black);
+        setLocationRelativeTo(null);
+        setTitle("DUNGEON RPG");
+        
+        this.container = getContentPane();
 
         setTitleScreen();
     }

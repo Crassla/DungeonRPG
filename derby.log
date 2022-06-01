@@ -1,13 +1,20 @@
+Tue May 31 22:20:13 NZST 2022 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Tue May 31 21:39:02 NZST 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0181-197b-a664-00000f78ebe8 
-on database directory C:\Users\GGPC\Documents\NetBeansProjects\PSCAssignment2\DungeonRPG with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@659e0bfd 
-Loaded from file:/C:/Users/GGPC/Documents/NetBeansProjects/PDC_Tutorials/lib/derby.jar
+Tue May 31 22:20:13 NZST 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0181-19a1-57ca-00007926d58d 
+on database directory C:\Users\GGPC\Documents\NetBeansProjects\PSCAssignment2\DungeonRPG with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@73d16e93 
+Loaded from file:/C:/Users/GGPC/Documents/JDPC/db-derby-10.14.2.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=16.0.2+7-67
-user.dir=C:\Users\GGPC\Documents\NetBeansProjects\PSCAssignment2
+user.dir=C:\Users\GGPC\Documents\JDPC\db-derby-10.14.2.0-bin
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
-derby.system.home=null
+derby.system.home=C:\Users\GGPC\Documents\NetBeansProjects\PSCAssignment2
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Tue May 31 22:20:35 NZST 2022: Shutting down Derby engine
+----------------------------------------------------------------
+Tue May 31 22:20:35 NZST 2022:
+Shutting down instance a816c00e-0181-19a1-57ca-00007926d58d on database directory C:\Users\GGPC\Documents\NetBeansProjects\PSCAssignment2\DungeonRPG with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@73d16e93 
+----------------------------------------------------------------
