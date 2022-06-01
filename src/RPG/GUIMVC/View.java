@@ -342,6 +342,13 @@ public class View extends JFrame
         textButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
         textButton.setFocusPainted(false);
         textButton.addActionListener(controller.createGameHandler());
+        
+        JButton textButton2 = new JButton("EXIT");
+        textButton2.setBackground(Color.black);
+        textButton2.setForeground(Color.white);
+        textButton2.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        textButton2.setFocusPainted(false);
+        textButton2.addActionListener(controller.restartGameHandler());
 
         panel1.add(label);
         panel2.add(errorLabel);
@@ -349,6 +356,7 @@ public class View extends JFrame
         panel4.add(numRoomSpinner);
         panel5.add(createGameTextField);
         panel6.add(textButton);
+        panel6.add(textButton2);
 
         newGameScreen.add(Box.createVerticalStrut(50));
         newGameScreen.add(panel1);
@@ -965,7 +973,7 @@ public class View extends JFrame
             text += " ";
         }
 
-        text = "Rooms Left:   " + text;
+        text = text;
 
         for (int i = 10; i > text.length(); i--)
         {

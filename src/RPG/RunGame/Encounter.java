@@ -78,7 +78,7 @@ public class Encounter
         }
         view.setEnemyHealth(enemy.getHealth() + "");
         view.updateMainLabel(output);
-        Timer timer = new Timer(1000, new ActionListener()
+        Timer timer = new Timer(2000, new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent event)
@@ -97,7 +97,7 @@ public class Encounter
         String output = "<html>";
         output += ("You are blocking for " + player.getArmourClass()) + "<br></html>";
         view.updateMainLabel(output);
-        Timer timer = new Timer(1000, new ActionListener()
+        Timer timer = new Timer(2000, new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent event)
@@ -138,7 +138,7 @@ public class Encounter
         {
             output += (enemy + " dies") + "<br></html>";
             view.updateMainLabel(output);
-            Timer timer = new Timer(1000, new ActionListener()
+            Timer timer = new Timer(2000, new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent event)
@@ -214,7 +214,7 @@ public class Encounter
             output += (player) + "<br></html>";
             view.enableEncounterButtons();
             view.updateMainLabel(output);
-            Timer timer = new Timer(1000, new ActionListener()
+            Timer timer = new Timer(2000, new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent event)
@@ -239,9 +239,8 @@ public class Encounter
     public void applyReward()
     {
         String output = "<html>";
-        output += ("You win against " + player.getRoom().getEnemy()) + "<br>";
-        output += ("You won " + player.getRoom().getReward()) + "<br>";
-        output += ("You rest and regain 20 health") + "<br>";
+        output += "You win against " + player.getRoom().getEnemy() + ". You won " + player.getRoom().getReward() + "<br>";
+        output += ("You rest and regain 20 health") + "<br><br>";
         player.setHealth(20);
         player.getRoom().getReward().addReward(player);
         output += ("Your current stats are: ") + "<br>";

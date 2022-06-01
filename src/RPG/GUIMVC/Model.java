@@ -111,7 +111,7 @@ public class Model
         view.setPlayerDamageLabel("" + game.getPlayer().getDamage());
         view.setPlayerArmourLabel("" + game.getPlayer().getArmourClass());
         view.setPlayerRollLabel("" + game.getPlayer().getRollModifier());
-        view.setRoomLabel("" + game.getMapLength());
+        view.setRoomLabel("Rooms Left: " + game.getMapLength());
     }
 
     //gets an old game object from the database
@@ -140,8 +140,8 @@ public class Model
         if (game.mapEmpty())
         {
             view.setBoardScreen();
-            view.setEncounterPlayerHealth(game.getPlayer().getName());
-            view.setRoomLabel(game.getMapLength() + 1 + "");
+            view.setEncounterPlayerHealth(game.getPlayer().getPlayerClass() + ": " + game.getPlayer().getName());
+            view.setRoomLabel("Score: " + game.getMapSize() + "");
         }
         else
         {
