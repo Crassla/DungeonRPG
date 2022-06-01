@@ -37,6 +37,7 @@ import javax.swing.border.TitledBorder;
 public class View extends JFrame
 {
 
+    //instantiates all of the variables
     private final Controller controller;
     private Container container;
     private JPanel titleScreen, loadGameScreen, newGameScreen, mainGameScreen, encounterScreen, saveScreen, endGameScreen, boardScreen;
@@ -46,13 +47,15 @@ public class View extends JFrame
     private JSpinner numRoomSpinner;
     private JButton attack, block, skill, saveScoreButton, saveLeaderButton, exit;
 
+    //instantiates a new view object
     public View(Controller controller)
     {
         this.controller = controller;
 
-        initView();
+        initView(); //runs the initview function
     }
     
+    //initializes the view panel
     private void initView()
     {
         setSize(1000, 600);
@@ -66,6 +69,7 @@ public class View extends JFrame
         setTitleScreen();
     }
 
+    //intialises a game panel pased through to it
     private JPanel initPanel(JPanel panel)
     {
         panel = new JPanel();
@@ -77,6 +81,7 @@ public class View extends JFrame
         return panel;
     }
 
+    //removes all current screens to prevent the overloading of the jFrame
     private void removeCurrentScreen()
     {
         if (titleScreen != null)
@@ -129,6 +134,7 @@ public class View extends JFrame
         this.repaint();
     }
 
+    //sets the title screen of the game
     public void setTitleScreen()
     {
         removeCurrentScreen();
@@ -188,6 +194,7 @@ public class View extends JFrame
         this.setVisible(true);
     }
 
+    //sets the load screen of the game
     public void setLoadScreen()
     {
         removeCurrentScreen();
@@ -251,6 +258,7 @@ public class View extends JFrame
         this.repaint();
     }
 
+    //sets the new game screen of the game
     public void setNewGameScreen()
     {
         removeCurrentScreen();
@@ -363,6 +371,7 @@ public class View extends JFrame
         this.repaint();
     }
 
+    //sets the main game screen
     public void setGameScreen()
     {
         removeCurrentScreen();
@@ -448,6 +457,7 @@ public class View extends JFrame
         this.repaint();
     }
 
+    //sets the encounter screen
     public void setEncounterScreen()
     {
         removeCurrentScreen();
@@ -534,6 +544,7 @@ public class View extends JFrame
         this.repaint();
     }
 
+    //sets the save screen
     public void setSaveScreen()
     {
         removeCurrentScreen();
@@ -619,6 +630,7 @@ public class View extends JFrame
         this.repaint();
     }
 
+    //sets the end game screen
     public void setEndGameScreen()
     {
         removeCurrentScreen();
@@ -681,6 +693,7 @@ public class View extends JFrame
         this.repaint();
     }
 
+    //sets the board screen
     public void setBoardScreen()
     {
         removeCurrentScreen();
@@ -767,6 +780,7 @@ public class View extends JFrame
         this.repaint();
     }
 
+    //opens a popup displaying the list given
     public void popUp(List<String> list, String name)
     {
         JFrame frame = new JFrame(name);
@@ -803,6 +817,7 @@ public class View extends JFrame
         frame.pack();
     }
 
+    //displays a popup for a string given
     public void popUp2(String popUp, String name)
     {
         JFrame frame = new JFrame(name);
@@ -829,6 +844,7 @@ public class View extends JFrame
         frame.setVisible(true);
     }
 
+    //disables all enocunter buttons
     public void disableEncounterButtons()
     {
         attack.setEnabled(false);
@@ -836,6 +852,7 @@ public class View extends JFrame
         skill.setEnabled(false);
     }
 
+    //reenables all encounter buttons
     public void enableEncounterButtons()
     {
         attack.setEnabled(true);
@@ -843,6 +860,7 @@ public class View extends JFrame
         skill.setEnabled(true);
     }
 
+    //disables the scoreboard button
     public void disableScoreButton()
     {
         if (saveScoreButton != null)
@@ -851,6 +869,7 @@ public class View extends JFrame
         }
     }
 
+    //disables the leaderboard button
     public void disableLeaderButton()
     {
         if (saveLeaderButton != null)
@@ -859,6 +878,7 @@ public class View extends JFrame
         }
     }
 
+    //enables the save buttons
     public void enableSaveButtons()
     {
         if (saveLeaderButton != null && saveScoreButton != null)
@@ -868,6 +888,7 @@ public class View extends JFrame
         }
     }
     
+    //disables the exit button
     public void disableExitButton()
     {
         if (exit != null)
@@ -876,21 +897,25 @@ public class View extends JFrame
         }
     }
 
+    //updates the main label with the text given
     public void updateMainLabel(String text)
     {
         mainLabel.setText(text);
     }
 
+    //returns the text in loadfield
     public String getLoadTextField()
     {
         return loadTextField.getText();
     }
 
+    //updates the error label with the text given
     public void updateErrorLabel(String text)
     {
         errorLabel.setText(text);
     }
 
+    //gets the number of rooms, returns -1 if there are no rooms
     public int getNumRooms()
     {
         JComponent editor = numRoomSpinner.getEditor();
@@ -902,16 +927,19 @@ public class View extends JFrame
         return Integer.parseInt(tf.getText());
     }
 
+    //returns the class selected, by default returns paladin
     public int getPlayerClass()
     {
         return classList.getSelectedIndex();
     }
 
+    //returns the playername from the text field
     public String getPlayerName()
     {
         return createGameTextField.getText();
     }
 
+    //sets the player helath label to the current health
     public void setPlayerHealthLabel(String name, String playerClass, String text)
     {
         for (int i = 10; i > text.length(); i--)
@@ -929,6 +957,7 @@ public class View extends JFrame
         playerHealth.setText(text);
     }
 
+    //sets the room label to the room given
     public void setRoomLabel(String text)
     {
         for (int i = 10; i > text.length(); i--)
@@ -946,6 +975,7 @@ public class View extends JFrame
         this.roomsLeft.setText(text);
     }
 
+    //sets the damage to the deamage given
     public void setPlayerDamageLabel(String text)
     {
         for (int i = 10; i > text.length(); i--)
@@ -963,6 +993,7 @@ public class View extends JFrame
         playerDamage.setText(text);
     }
 
+    //sets the armour class label to the armour class given
     public void setPlayerArmourLabel(String text)
     {
         for (int i = 10; i > text.length(); i--)
@@ -980,6 +1011,7 @@ public class View extends JFrame
         playerArmourClass.setText(text);
     }
 
+    //sets the roll label to the roll number given
     public void setPlayerRollLabel(String text)
     {
         for (int i = 10; i > text.length(); i--)
@@ -997,12 +1029,14 @@ public class View extends JFrame
         playerRollModifier.setText(text);
     }
 
+    //sets the encounter health to the health given
     public void setEncounterPlayerHealth(String text)
     {
         text = "            " + text + "            ";
         playerHealth.setText(text);
     }
 
+    //sets the enemy health to the health given
     public void setEnemyHealth(String text)
     {
         text = "            " + text + "            ";
