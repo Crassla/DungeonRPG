@@ -50,6 +50,7 @@ abstract public class Player implements Nameable
     //skill which is class based
     abstract public void skill();
     
+    //returns the skill as a string
     abstract public String skillString();
 
     //reverses class based skill
@@ -70,6 +71,7 @@ abstract public class Player implements Nameable
         return this.currentRoom;
     }
     
+    //returns the players classname
     public String getPlayerClass()
     {
         return this.className;

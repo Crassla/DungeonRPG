@@ -15,8 +15,10 @@ import RPG.GameSetup.Game;
  */
 public class StartGame
 {
+    //contains a gamesave object for it to use
     private final GameSave gameSave;
 
+    //instaintiates a startgame object
     public StartGame(GameSave gameSave)
     {
         this.gameSave = gameSave;

@@ -128,11 +128,13 @@ public class Game
         return this.mapSize;
     }
     
+    //returns the current map size (number of rooms left)
     public int getMapLength()
     {
         return this.map.size();
     }
     
+    //returns if the map is empty
     public boolean mapEmpty()
     {
         return this.map.isEmpty();

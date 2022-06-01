@@ -28,6 +28,7 @@ public class Reward
         this.rewardType = rewardType; //sets the reward type
     }
     
+    //sets the reward to reward so it can be set manually
     public void setReward(int reward)
     {
         this.reward = reward;

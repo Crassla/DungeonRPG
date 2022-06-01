@@ -13,8 +13,10 @@ package RPG.RunGame;
 public class Instructions
 {
 
+    //has a string to save the entire output
     private String output;
     
+    //when created makes the string
     public Instructions()
     {
         output = "<html>";
@@ -23,6 +25,7 @@ public class Instructions
         output += "</html>";
     }
 
+    //prints the class information
     private void printClassInformation()
     {
         output += ("<br><br>=====================CLASS DETAILS====================<br>");
@@ -32,6 +35,7 @@ public class Instructions
         this.printBarbarianStats();
     }
 
+    //adds the wizard information
     private void printWizardStats()
     {
         output +=("<br><br>========================WIZARD======================<br>");
@@ -44,6 +48,7 @@ public class Instructions
         output +=("Once per encounter a Wizard can use their skill to gain +8 roll modifier.<br>");
     }
 
+    //adds the paladin information
     private void printPaladinStats()
     {
         output +=("<br><br>========================PALADIN======================<br>");
@@ -56,6 +61,7 @@ public class Instructions
         output +=("Once per encounter a Paladin can use their skill to heal 20 health.<br>");
     }
 
+    //adds the barbarian information
     private void printBarbarianStats()
     {
         output += ("<br><br>========================BARBARIAN======================<br>");
@@ -68,6 +74,7 @@ public class Instructions
         output += ("Once per encounter a Barbarian can use their skill to gain +20 damage.<br>");
     }
 
+    //adds all of the game details
     private void printGameDetails()
     {
         output += ("<br><br>=====================GAME DETAILS====================<br>");
@@ -93,6 +100,7 @@ public class Instructions
         output += ("than their opponents AC<br>");
     }
     
+    //returns output
     public String getOutput()
     {
         return this.output;

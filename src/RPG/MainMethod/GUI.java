@@ -14,6 +14,8 @@ import RPG.GUIMVC.View;
  * 
  * This is the GUI manager class which manages all of the instances of the MVC model
  * It maintains the GUI
+ * 
+ * It runs the game by creating a new GUI instance
  */
 public class GUI
 {
@@ -29,5 +31,10 @@ public class GUI
         this.controller = new Controller(model);
         this.view = new View(controller);
         this.model.setView(view);
+    }
+    
+    public static void main(String args[])
+    {
+        GUI gui = new GUI();
     }
 }
