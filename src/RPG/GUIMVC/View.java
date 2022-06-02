@@ -45,7 +45,7 @@ public class View extends JFrame
     private JLabel errorLabel, mainLabel, playerHealth, playerDamage, playerRollModifier, playerArmourClass, enemyHealth, roomsLeft;
     private JList classList;
     private JSpinner numRoomSpinner;
-    private JButton attack, block, skill, saveScoreButton, saveLeaderButton, exit;
+    private JButton attack, block, skill, saveScoreButton, saveLeaderButton, exit, move;
 
     //instantiates a new view object
     public View(Controller controller)
@@ -428,7 +428,7 @@ public class View extends JFrame
         mainLabel.setBorder(null);
         mainLabel.setText("<html>You walk into a dark dungeon, on your left you see an entrance to a room<br><br> What do you want to do?</html>");
 
-        JButton move = new JButton("MOVE");
+        move = new JButton("MOVE");
         move.setBackground(Color.black);
         move.setForeground(Color.white);
         move.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -852,6 +852,12 @@ public class View extends JFrame
         frame.setVisible(true);
     }
 
+    //
+    public void disableMoveButton()
+    {
+        move.setEnabled(false);
+    }
+    
     //disables all enocunter buttons
     public void disableEncounterButtons()
     {

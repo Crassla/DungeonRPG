@@ -173,7 +173,7 @@ public class Encounter
                 {
                     block = block - enemy.getDamage();// takes away the block by the enemies damage
                 }
-                
+
                 if (player.getHealth() == 0)
                 {
                     endEncounter();
@@ -213,6 +213,12 @@ public class Encounter
             output += ("Your final stats were:") + "<br>";
             output += (player) + "<br></html>";
             view.enableEncounterButtons();
+            view.disableMoveButton();
+            view.disableExitButton();
+            view.setPlayerHealthLabel(player.getName(), player.getPlayerClass(), "" + player.getHealth());
+            view.setPlayerDamageLabel("" + player.getDamage());
+            view.setPlayerArmourLabel("" + player.getArmourClass());
+            view.setPlayerRollLabel("" + player.getRollModifier());
             view.updateMainLabel(output);
             Timer timer = new Timer(3000, new ActionListener()
             {
@@ -251,7 +257,7 @@ public class Encounter
         view.setPlayerDamageLabel("" + player.getDamage());
         view.setPlayerArmourLabel("" + player.getArmourClass());
         view.setPlayerRollLabel("" + player.getRollModifier());
-        view.setRoomLabel("" + game.getMapLength());
+        view.setRoomLabel("Rooms Left: " + game.getMapLength());
         view.updateMainLabel(output);
         if (game.getMapLength() == 0)
         {
